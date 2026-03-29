@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+.venv/
+venv/
+
+# Django
+backend/staticfiles/
+backend/media/
+backend/.env
+
+# Node / React
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Android build outputs and secrets
+frontend/android/.gradle/
+frontend/android/build/
+frontend/android/app/build/
+frontend/android/local.properties
+frontend/android/release-signing.properties
+frontend/android/keystore/
+
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Archives and binaries
+*.zip
+*.apk
+*.aab

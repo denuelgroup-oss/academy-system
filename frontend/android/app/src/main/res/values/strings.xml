@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AcademyPRO</string>
+    <string name="title_activity_main">AcademyPRO</string>
+    <string name="package_name">com.denuelacademy.app</string>
+    <string name="custom_url_scheme">com.denuelacademy.app</string>
+</resources>

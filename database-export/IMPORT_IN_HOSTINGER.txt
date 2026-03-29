@@ -1,0 +1,5 @@
+1) Open Hostinger hPanel > Databases > phpMyAdmin
+2) Select your target database
+3) Go to Import tab
+4) Upload academypro.sql from this zip
+5) Click Go to run import
