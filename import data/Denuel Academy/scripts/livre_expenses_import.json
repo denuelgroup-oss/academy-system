@@ -1,0 +1,2122 @@
+﻿[
+    {
+        "expense_date":  "2025-08-19",
+        "title":  "Achats materiels lié à la casure de la grose pierre au terrain (Oncle Cedrick )",
+        "amount":  75,
+        "currency":  "USD",
+        "mode":  "Caisse reçu N°",
+        "source_key":  "LIVRE2025|Aout|R24|G"
+    },
+    {
+        "expense_date":  "2025-08-19",
+        "title":  "payement des agents des travaux au terrain (Mardin pour le compte de Lady Mbenza)",
+        "amount":  200000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Aout|R25|H"
+    },
+    {
+        "expense_date":  "2025-08-19",
+        "title":  "frais de transport pour le coach (laetitia pour le compte du coach daouda)",
+        "amount":  5500,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Aout|R26|H"
+    },
+    {
+        "expense_date":  "2025-08-19",
+        "title":  "transfere d\u0027argent (chef Emmanuel Atunga)",
+        "amount":  50,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Aout|R27|G"
+    },
+    {
+        "expense_date":  "2025-08-20",
+        "title":  "transport du poteau de foot (Mardin )",
+        "amount":  25000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Aout|R28|H"
+    },
+    {
+        "expense_date":  "2025-08-31",
+        "title":  "TOTAL",
+        "amount":  125,
+        "currency":  "USD",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Aout|R30|G"
+    },
+    {
+        "expense_date":  "2025-08-31",
+        "title":  "TOTAL",
+        "amount":  230500,
+        "currency":  "CDF",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Aout|R30|H"
+    },
+    {
+        "expense_date":  "2025-03-09",
+        "title":  "Transport groupe electrogene (mardin)",
+        "amount":  57000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R7|H"
+    },
+    {
+        "expense_date":  "2025-03-09",
+        "title":  "impression affiche (Mardin)",
+        "amount":  85000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R8|H"
+    },
+    {
+        "expense_date":  "2025-03-09",
+        "title":  "transport ( mardin)",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R9|H"
+    },
+    {
+        "expense_date":  "2025-03-09",
+        "title":  "Transport groupe electrogene de l\u0027arret au terrain (mardin)",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Septembre|R10|H"
+    },
+    {
+        "expense_date":  "2025-04-09",
+        "title":  "mardin",
+        "amount":  42000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R11|H"
+    },
+    {
+        "expense_date":  "2025-09-09",
+        "title":  "payement de maillot aupres de kit by G ( madame Germaine)",
+        "amount":  80,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R14|G"
+    },
+    {
+        "expense_date":  "2025-10-09",
+        "title":  "achat clavier, impression (Gradi)",
+        "amount":  20000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R16|H"
+    },
+    {
+        "expense_date":  "2025-11-09",
+        "title":  "impression, transport pour courrier bralima et DGRKC (Gradi)",
+        "amount":  5000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R17|H"
+    },
+    {
+        "expense_date":  "2025-11-09",
+        "title":  "tranqport pour la delegation de Matoumona Roum (chef Emmanuel Atunga)",
+        "amount":  50,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Septembre|R18|G"
+    },
+    {
+        "expense_date":  "2025-12-09",
+        "title":  "Payement de frais des exmans d\u0027aptitude physique ( Gradi pour le compte de l\u0027hygiene)",
+        "amount":  45000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R22|H"
+    },
+    {
+        "expense_date":  "2025-12-09",
+        "title":  "transfere d\u0027argent, frais d\u0027envoie (chef Emmanuel Atunga)",
+        "amount":  80,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Septembre|R26|G"
+    },
+    {
+        "expense_date":  "2025-12-09",
+        "title":  "transfere d\u0027argent, frais d\u0027envoie (chef Emmanuel Atunga)",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Septembre|R26|H"
+    },
+    {
+        "expense_date":  "2025-09-13",
+        "title":  "payement de frais des examens d\u0027aptitude physique ( Gradi pour le compte de l\u0027hygiene)",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R29|H"
+    },
+    {
+        "expense_date":  "2025-09-13",
+        "title":  "achat ctrédit (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R30|H"
+    },
+    {
+        "expense_date":  "2025-09-13",
+        "title":  "photocopie fiche d\u0027inscription, resultat d\u0027aptitude physique (Gradi)",
+        "amount":  2500,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R32|H"
+    },
+    {
+        "expense_date":  "2025-09-13",
+        "title":  "mise de l\u0027air au ballon et achat sachet market (Gradi)",
+        "amount":  5000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R33|H"
+    },
+    {
+        "expense_date":  "2025-09-13",
+        "title":  "achat eau swista pour l\u0027entrainement d\u0027ouverture (Laetitia)",
+        "amount":  16000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R34|H"
+    },
+    {
+        "expense_date":  "2025-09-14",
+        "title":  "Chef EMMANUEL ATUNGA",
+        "amount":  25,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R35|G"
+    },
+    {
+        "expense_date":  "2025-09-14",
+        "title":  "Chef EMMANUEL ATUNGA",
+        "amount":  155000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R35|H"
+    },
+    {
+        "expense_date":  "2025-09-14",
+        "title":  "Chef EMMANUEL ATUNGA",
+        "amount":  20000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R37|H"
+    },
+    {
+        "expense_date":  "2025-09-14",
+        "title":  "transport staff technique du 14/9/2025 (coach daouda, coach michelle, soigner)",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R38|H"
+    },
+    {
+        "expense_date":  "2025-09-14",
+        "title":  "transport du retour des equipements de l\u0027entrainement (Gradi )",
+        "amount":  5000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R39|H"
+    },
+    {
+        "expense_date":  "2025-09-14",
+        "title":  "transport personnel administratif (laetitia, Gradi)",
+        "amount":  4000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R40|H"
+    },
+    {
+        "expense_date":  "2025-09-15",
+        "title":  "transport coach daouda",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R42|H"
+    },
+    {
+        "expense_date":  "2025-09-16",
+        "title":  "transport coach daouda",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Septembre|R43|H"
+    },
+    {
+        "expense_date":  "2025-09-16",
+        "title":  "transfere d\u0027argent, frais d\u0027envoie (chef Emmanuel Atunga)",
+        "amount":  10,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R45|G"
+    },
+    {
+        "expense_date":  "2025-09-16",
+        "title":  "transfere d\u0027argent, frais d\u0027envoie (chef Emmanuel Atunga)",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R45|H"
+    },
+    {
+        "expense_date":  "2025-09-17",
+        "title":  "achat materiel de bureau (agraffe, agraffeuse, farde, cahier cartonné, encre correcteur,classeur,enveloppe A4)",
+        "amount":  41000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R46|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "impression document credit Equity bank (gradi)",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R51|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "transport equipement d\u0027entrainnement (gradi pour le compte de fiston)",
+        "amount":  4000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Septembre|R52|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "location chaise pour l\u0027entrainnement (gradi)",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R53|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "transport personnel (laeticia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R54|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "transport direction terrain (gradi)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R55|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "transport direction equity bcdc pour depot document credit (gradi)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R56|H"
+    },
+    {
+        "expense_date":  "2025-09-18",
+        "title":  "transport staff technique pour l\u0027entrainnement du 18/9/2025 (coach daouda)",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R57|H"
+    },
+    {
+        "expense_date":  "2025-09-19",
+        "title":  "achat credit pour le numero de l\u0027academy (gradi)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R58|H"
+    },
+    {
+        "expense_date":  "2025-09-19",
+        "title":  "achat domino electronique (gradi)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R59|H"
+    },
+    {
+        "expense_date":  "2025-09-19",
+        "title":  "payement de frais d\u0027aptitude physique (gradi pour le compte de l\u0027hygiene)",
+        "amount":  60000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R60|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "payement de frais d\u0027aptitude physique (gradi pour le compte de l\u0027hygiene)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R61|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "payement de frais d\u0027aptitude physique (gradi pour le compte de l\u0027hygiene)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R63|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "payement de frais d\u0027aptitude physique (gradi pour le compte de l\u0027hygiene)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R64|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "Transport de l\u0027entrainement du 20/9/2025 (staff technique)",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R68|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "Transport de la semaine du 21 au  27/9/2025",
+        "amount":  54000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R69|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "location chaise pour l\u0027entrainnement du 20/9/2025 (gradi)",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R70|H"
+    },
+    {
+        "expense_date":  "2025-09-20",
+        "title":  "photocopie des resultats d\u0027aptitude physique (Gradi)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R71|H"
+    },
+    {
+        "expense_date":  "2025-09-23",
+        "title":  "payement d\u0027examen d\u0027aptitude physique ( Gradi pour le compte de l\u0027hygiene)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R73|H"
+    },
+    {
+        "expense_date":  "2025-09-23",
+        "title":  "payement d\u0027examen d\u0027aptitude physique ( Gradi pour le compte de l\u0027hygiene)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R75|H"
+    },
+    {
+        "expense_date":  "2025-09-23",
+        "title":  "location chaises pour l\u0027entrainament (gradi)",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R76|H"
+    },
+    {
+        "expense_date":  "2025-09-23",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 23/9/2025",
+        "amount":  10500,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R77|H"
+    },
+    {
+        "expense_date":  "2025-09-23",
+        "title":  "transport personnel administratif (laetitia, Gradi)",
+        "amount":  4000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R78|H"
+    },
+    {
+        "expense_date":  "2025-09-24",
+        "title":  "photocopie du resultat d\u0027aptitude physique (gradi)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R80|H"
+    },
+    {
+        "expense_date":  "2025-09-25",
+        "title":  "achat de VGA",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R81|H"
+    },
+    {
+        "expense_date":  "2025-09-25",
+        "title":  "payement de l\u0027aptitude physiquez à l\u0027hygiene",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R83|H"
+    },
+    {
+        "expense_date":  "2025-09-25",
+        "title":  "achat depaquet d\u0027eau pour l\u0027entrainement du 25/9/2025 (gradi)",
+        "amount":  10500,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R84|H"
+    },
+    {
+        "expense_date":  "2025-09-25",
+        "title":  "location des chaises pour l\u0027entrainement du 25/9/2025 (gradi)",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R85|H"
+    },
+    {
+        "expense_date":  "2025-09-25",
+        "title":  "transport pour les personnels administratifs",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R86|H"
+    },
+    {
+        "expense_date":  "2025-09-27",
+        "title":  "achat credit pour le numero de l\u0027academy (gradi)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R88|H"
+    },
+    {
+        "expense_date":  "2025-09-27",
+        "title":  "achat de paquets d\u0027eau pour l\u0027entrainement du 27/9/2025",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R89|H"
+    },
+    {
+        "expense_date":  "2025-09-27",
+        "title":  "location des chaises pour l\u0027entrainement du 27/9/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R90|H"
+    },
+    {
+        "expense_date":  "2025-09-29",
+        "title":  "payement d\u0027examen d\u0027aptitude physique pour le compten de l\u0027hygiene",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R92|H"
+    },
+    {
+        "expense_date":  "2025-09-29",
+        "title":  "achat pompe de ballon",
+        "amount":  10,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R93|G"
+    },
+    {
+        "expense_date":  "2025-09-29",
+        "title":  "impression et photocopie",
+        "amount":  11000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R94|H"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "achat filet d\u0027emballage d\u0027equipement (coach daouda)",
+        "amount":  10,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R95|G"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 30/9/2025",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R96|H"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "location des chaises pour l\u0027entrainement du 30/9/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R97|H"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "transport personnel administratif",
+        "amount":  4000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R98|H"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "achat forfait internet (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Septembre|R99|H"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "SOLDE A NOUVEAU",
+        "amount":  265,
+        "currency":  "USD",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Septembre|R100|G"
+    },
+    {
+        "expense_date":  "2025-09-30",
+        "title":  "SOLDE A NOUVEAU",
+        "amount":  982500,
+        "currency":  "CDF",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Septembre|R100|H"
+    },
+    {
+        "expense_date":  "2025-01-10",
+        "title":  "transport ville (gradi)",
+        "amount":  4000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R9|H"
+    },
+    {
+        "expense_date":  "2025-01-10",
+        "title":  "impression et photocopie (gradi)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R11|H"
+    },
+    {
+        "expense_date":  "2025-01-10",
+        "title":  "achat credit pour le numero de l\u0027academy (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R12|H"
+    },
+    {
+        "expense_date":  "2025-01-10",
+        "title":  "transport (laeticia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R13|H"
+    },
+    {
+        "expense_date":  "2025-02-10",
+        "title":  "paiement flocage maillots (tshicode)",
+        "amount":  70,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R16|G"
+    },
+    {
+        "expense_date":  "2025-02-10",
+        "title":  "transport ville (gradi)",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R17|H"
+    },
+    {
+        "expense_date":  "2025-02-10",
+        "title":  "transport direction terrain (gradi)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R18|H"
+    },
+    {
+        "expense_date":  "2025-02-10",
+        "title":  "location des chaises (gradi)",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R19|H"
+    },
+    {
+        "expense_date":  "2025-02-10",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R20|H"
+    },
+    {
+        "expense_date":  "2025-02-10",
+        "title":  "transport du staff technique de l\u0027entrainement du 02/10/2025",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R21|H"
+    },
+    {
+        "expense_date":  "2025-03-10",
+        "title":  "paiement flocage maillots (tshicode)",
+        "amount":  20,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R24|G"
+    },
+    {
+        "expense_date":  "2025-03-10",
+        "title":  "transport ville (gradi)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Octobre |R25|H"
+    },
+    {
+        "expense_date":  "2025-03-10",
+        "title":  "transport (gradi)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R26|H"
+    },
+    {
+        "expense_date":  "2025-04-10",
+        "title":  "transport ville (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R27|H"
+    },
+    {
+        "expense_date":  "2025-04-10",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 04/10/2025",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R28|H"
+    },
+    {
+        "expense_date":  "2025-04-10",
+        "title":  "location des chaises (laetitia)",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R29|H"
+    },
+    {
+        "expense_date":  "2025-06-10",
+        "title":  "transport ville (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R30|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "transport ville destination tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R32|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "transport destination terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R33|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "transport staff technique du 7/10/25025",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R34|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 07/10/2025",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R35|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "location des chaise pour l\u0027entrainement du 7/10/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R36|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "achat des forfaits internet pour le rapport (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R37|H"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "paiement de salaire (laetitia)",
+        "amount":  40,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R38|G"
+    },
+    {
+        "expense_date":  "2025-07-10",
+        "title":  "paiement flocage maillots (tshicode)",
+        "amount":  20,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R39|G"
+    },
+    {
+        "expense_date":  "2025-09-10",
+        "title":  "transport destination terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R42|H"
+    },
+    {
+        "expense_date":  "2025-09-10",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 9/10/2025",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R43|H"
+    },
+    {
+        "expense_date":  "2025-09-10",
+        "title":  "location des chaises pour l\u0027entrainement du 9/10/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R44|H"
+    },
+    {
+        "expense_date":  "2025-09-10",
+        "title":  "transport staff technique du 9/10/25025",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R45|H"
+    },
+    {
+        "expense_date":  "2025-11-10",
+        "title":  "transport destination terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R46|H"
+    },
+    {
+        "expense_date":  "2025-11-10",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 11/10/2025",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R47|H"
+    },
+    {
+        "expense_date":  "2025-11-10",
+        "title":  "location des chaises pour l\u0027entrainement du 11/10/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R48|H"
+    },
+    {
+        "expense_date":  "2025-11-10",
+        "title":  "transport staff technique du 11/09/2025",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R49|H"
+    },
+    {
+        "expense_date":  "2025-10-13",
+        "title":  "impression et photocopie ( laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R53|H"
+    },
+    {
+        "expense_date":  "2025-10-13",
+        "title":  "transport ville tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R54|H"
+    },
+    {
+        "expense_date":  "2025-10-13",
+        "title":  "achat de forfaits internet pour le rapport (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R57|H"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "paiement fournisseur germaine (kit by g) pour l\u0027achat maillot",
+        "amount":  100,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R60|G"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "transfere d\u0027argent chef emma",
+        "amount":  20,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R61|G"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "paiement de flocage maillot (tshicode)",
+        "amount":  20,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R62|G"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "transport direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R63|H"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R64|H"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 14/10/2025",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R65|H"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "location chaises pour l\u0027entainement du 14/10/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R66|H"
+    },
+    {
+        "expense_date":  "2025-10-14",
+        "title":  "transport staff technique du 14/10/2025",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R67|H"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "transport ville direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R73|H"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R74|H"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 16/10/2025",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R75|H"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "location des chaises pour l\u0027entrainement du 16/10/2025",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R76|H"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R77|H"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "transfert d\u0027argent chef emma, frais d\u0027envoi",
+        "amount":  20,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R78|G"
+    },
+    {
+        "expense_date":  "2025-10-16",
+        "title":  "transfert d\u0027argent chef emma, frais d\u0027envoi",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R78|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "paiement d\u0027examen d\u0027aptitude physique (hygiene)",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R82|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "paiement d\u0027examen d\u0027aptitude physique (hygiene)",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R83|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "paiement de frais de flocage maillot (tshicode)",
+        "amount":  5,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R84|G"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "transport ville direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R89|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R90|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "transport staff technique (laetitia)",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R91|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "achat d\u0027eau pour l\u0027entrainement du 18/10/2025",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R92|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "location des chaises pour l\u0027entrainement",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R93|H"
+    },
+    {
+        "expense_date":  "2025-10-18",
+        "title":  "photocopie",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R94|H"
+    },
+    {
+        "expense_date":  "2025-10-20",
+        "title":  "depot à la banque (laetitia), transport equity",
+        "amount":  195,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R95|G"
+    },
+    {
+        "expense_date":  "2025-10-20",
+        "title":  "depot à la banque (laetitia), transport equity",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R95|H"
+    },
+    {
+        "expense_date":  "2025-10-20",
+        "title":  "achat des forfaits internet pour le rapport (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R96|H"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "achat de batterie pour le telephone de l\u0027academy",
+        "amount":  5000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R100|H"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "transport ville tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R101|H"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "transport ville direction tshicode (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R102|H"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "paiement de flocage maillot (tshicode)",
+        "amount":  15,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R103|G"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "achat d\u0027eau pour l\u0027entrainement",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R104|H"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R105|H"
+    },
+    {
+        "expense_date":  "2025-10-21",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R106|H"
+    },
+    {
+        "expense_date":  "2025-10-23",
+        "title":  "transfert d\u0027argent chef emma, frais d\u0027envoi",
+        "amount":  50,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R108|G"
+    },
+    {
+        "expense_date":  "2025-10-23",
+        "title":  "transfert d\u0027argent chef emma, frais d\u0027envoi",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R108|H"
+    },
+    {
+        "expense_date":  "2025-10-23",
+        "title":  "achat d\u0027eau pour l\u0027entrainement",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R109|H"
+    },
+    {
+        "expense_date":  "2025-10-23",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R110|H"
+    },
+    {
+        "expense_date":  "2025-10-23",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R111|H"
+    },
+    {
+        "expense_date":  "2025-10-23",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R112|H"
+    },
+    {
+        "expense_date":  "2025-10-24",
+        "title":  "Paiement Maillot (Germaine )",
+        "amount":  50,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R113|G"
+    },
+    {
+        "expense_date":  "2025-10-25",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R118|H"
+    },
+    {
+        "expense_date":  "2025-10-25",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R119|H"
+    },
+    {
+        "expense_date":  "2025-10-25",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R120|H"
+    },
+    {
+        "expense_date":  "2025-10-25",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R121|H"
+    },
+    {
+        "expense_date":  "2025-10-27",
+        "title":  "Achat forfait internet",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R123|H"
+    },
+    {
+        "expense_date":  "2025-10-28",
+        "title":  "Paiement Maillot (Germaine )",
+        "amount":  70,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R126|G"
+    },
+    {
+        "expense_date":  "2025-10-28",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R127|H"
+    },
+    {
+        "expense_date":  "2025-10-28",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R128|H"
+    },
+    {
+        "expense_date":  "2025-10-28",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R129|H"
+    },
+    {
+        "expense_date":  "2025-10-28",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R130|H"
+    },
+    {
+        "expense_date":  "2025-10-30",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R131|H"
+    },
+    {
+        "expense_date":  "2025-10-30",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R132|H"
+    },
+    {
+        "expense_date":  "2025-10-30",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R133|H"
+    },
+    {
+        "expense_date":  "2025-10-30",
+        "title":  "transport staff technique",
+        "amount":  20,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Octobre |R134|H"
+    },
+    {
+        "expense_date":  "2025-10-31",
+        "title":  "total net",
+        "amount":  695,
+        "currency":  "USD",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Octobre |R136|G"
+    },
+    {
+        "expense_date":  "2025-10-31",
+        "title":  "total net",
+        "amount":  413020,
+        "currency":  "CDF",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Octobre |R136|H"
+    },
+    {
+        "expense_date":  "2025-01-11",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R6|H"
+    },
+    {
+        "expense_date":  "2025-01-11",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R7|H"
+    },
+    {
+        "expense_date":  "2025-01-11",
+        "title":  "achat eau entrainement",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R8|H"
+    },
+    {
+        "expense_date":  "2025-01-11",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R9|H"
+    },
+    {
+        "expense_date":  "2025-04-11",
+        "title":  "transport staff technique",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R13|H"
+    },
+    {
+        "expense_date":  "2025-04-11",
+        "title":  "frais envoi laetitia",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R14|H"
+    },
+    {
+        "expense_date":  "2025-05-11",
+        "title":  "paiement examen aptitude physique",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R15|H"
+    },
+    {
+        "expense_date":  "2025-05-11",
+        "title":  "photocopie",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R16|H"
+    },
+    {
+        "expense_date":  "2025-05-11",
+        "title":  "transport",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R17|H"
+    },
+    {
+        "expense_date":  "2025-06-11",
+        "title":  "transport staff technique",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R18|H"
+    },
+    {
+        "expense_date":  "2025-06-11",
+        "title":  "transport ville direction tshicode",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R19|H"
+    },
+    {
+        "expense_date":  "2025-06-11",
+        "title":  "paiement de flocage maillot (tshicode)",
+        "amount":  15,
+        "currency":  "USD",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R20|G"
+    },
+    {
+        "expense_date":  "2025-07-11",
+        "title":  "achat de materiel pour les travaux au terrain",
+        "amount":  48500,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R22|H"
+    },
+    {
+        "expense_date":  "2025-08-11",
+        "title":  "transport ville direction tshicode",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R23|H"
+    },
+    {
+        "expense_date":  "2025-08-11",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R24|H"
+    },
+    {
+        "expense_date":  "2025-08-11",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "Caisse",
+        "source_key":  "LIVRE2025|Novembre |R25|H"
+    },
+    {
+        "expense_date":  "2025-08-11",
+        "title":  "achat eau entrainement",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R26|H"
+    },
+    {
+        "expense_date":  "2025-08-11",
+        "title":  "location des chaises pour l entrainement",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R27|H"
+    },
+    {
+        "expense_date":  "2025-10-11",
+        "title":  "paiement des salaires des personnels de l entreprise",
+        "amount":  200,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R29|G"
+    },
+    {
+        "expense_date":  "2025-11-11",
+        "title":  "transport direction terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R31|H"
+    },
+    {
+        "expense_date":  "2025-11-11",
+        "title":  "achat eau entrainement",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R32|H"
+    },
+    {
+        "expense_date":  "2025-11-11",
+        "title":  "location des chaises pour l entrainement",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R33|H"
+    },
+    {
+        "expense_date":  "2025-11-11",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R34|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "Achat forfait internet",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R42|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "transport direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R43|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R44|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R45|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R46|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R47|H"
+    },
+    {
+        "expense_date":  "2025-11-13",
+        "title":  "Paiement flocage chez tshicode",
+        "amount":  5,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R48|G"
+    },
+    {
+        "expense_date":  "2025-11-14",
+        "title":  "Paiement aptitude physique",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R49|H"
+    },
+    {
+        "expense_date":  "2025-11-14",
+        "title":  "paiement de flocage maillot (tshicode)",
+        "amount":  5,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R50|G"
+    },
+    {
+        "expense_date":  "2025-11-14",
+        "title":  "transport ville direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R51|H"
+    },
+    {
+        "expense_date":  "2025-11-15",
+        "title":  "transport direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R53|H"
+    },
+    {
+        "expense_date":  "2025-11-15",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R54|H"
+    },
+    {
+        "expense_date":  "2025-11-15",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R55|H"
+    },
+    {
+        "expense_date":  "2025-11-15",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R56|H"
+    },
+    {
+        "expense_date":  "2025-11-15",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R57|H"
+    },
+    {
+        "expense_date":  "2025-11-17",
+        "title":  "Paiement conteneuer 40\u0027",
+        "amount":  160,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R58|G"
+    },
+    {
+        "expense_date":  "2025-11-18",
+        "title":  "paiement d\u0027examen d\u0027aptitude physique (hygiene)",
+        "amount":  30000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R59|H"
+    },
+    {
+        "expense_date":  "2025-11-18",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R61|H"
+    },
+    {
+        "expense_date":  "2025-11-18",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R62|H"
+    },
+    {
+        "expense_date":  "2025-11-18",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R63|H"
+    },
+    {
+        "expense_date":  "2025-11-18",
+        "title":  "Location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R64|H"
+    },
+    {
+        "expense_date":  "2025-11-19",
+        "title":  "transport ville direction bank (leatitia )",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R67|H"
+    },
+    {
+        "expense_date":  "2025-11-19",
+        "title":  "Paiements photocopieuse",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R68|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "transport ville direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R69|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "Paiement conteneuer 40\u0027",
+        "amount":  40,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R70|G"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "Impression (sephora)",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R71|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "paiements aptitude physique",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R72|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "Paiement flocage chez tshicode",
+        "amount":  5,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R73|G"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "transport terrain",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R74|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R75|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "Location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R76|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R77|H"
+    },
+    {
+        "expense_date":  "2025-11-20",
+        "title":  "sortie de l\u0027argent a la banque",
+        "amount":  200,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R78|G"
+    },
+    {
+        "expense_date":  "2025-11-21",
+        "title":  "Transfert d\u0027argent (chef Emmanuel)",
+        "amount":  10,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R79|G"
+    },
+    {
+        "expense_date":  "2025-11-21",
+        "title":  "Frais d\u0027envoi",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R80|H"
+    },
+    {
+        "expense_date":  "2025-11-21",
+        "title":  "Papa ATUNGA",
+        "amount":  10,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R81|G"
+    },
+    {
+        "expense_date":  "2025-11-21",
+        "title":  "Achat Papier duplicateur",
+        "amount":  5000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R82|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "transport ville direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R84|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R85|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R86|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R87|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R88|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "transport staff administrative",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R89|H"
+    },
+    {
+        "expense_date":  "2025-11-22",
+        "title":  "Papa ATUNGA",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R91|H"
+    },
+    {
+        "expense_date":  "2025-11-24",
+        "title":  "Transport Casseur de pierres",
+        "amount":  66000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R92|H"
+    },
+    {
+        "expense_date":  "2025-11-24",
+        "title":  "transport direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R93|H"
+    },
+    {
+        "expense_date":  "2025-11-24",
+        "title":  "Paiment flocage maillot chez tshicode",
+        "amount":  5,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R94|G"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "Paiement aptitude physique",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R95|H"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "transport direction tshicode (laetitia)",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R97|H"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R98|H"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R99|H"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R100|H"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R101|H"
+    },
+    {
+        "expense_date":  "2025-11-25",
+        "title":  "impression et photocopie fiche d\u0027inscription",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R102|H"
+    },
+    {
+        "expense_date":  "2025-11-26",
+        "title":  "paiement d\u0027examen d\u0027aptitude physique (hygiene)",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R103|H"
+    },
+    {
+        "expense_date":  "2025-11-27",
+        "title":  "transport direction ville",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R105|H"
+    },
+    {
+        "expense_date":  "2025-11-27",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R106|H"
+    },
+    {
+        "expense_date":  "2025-11-27",
+        "title":  "transport staff technique",
+        "amount":  9000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R107|H"
+    },
+    {
+        "expense_date":  "2025-11-27",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R108|H"
+    },
+    {
+        "expense_date":  "2025-11-27",
+        "title":  "location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R109|H"
+    },
+    {
+        "expense_date":  "2025-11-27",
+        "title":  "Assistance dueil coach dauda",
+        "amount":  20,
+        "currency":  "USD",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R110|G"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "transport ville tshicode",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R115|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "transport direction terrain (laetitia)",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R116|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "transport staff technique",
+        "amount":  6000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R117|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "transport admins",
+        "amount":  4000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R118|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "Achat de l\u0027eau",
+        "amount":  12000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R119|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "Location des chaises",
+        "amount":  3000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R120|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "Achat forfait internet",
+        "amount":  2000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R121|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "Achat savon pour les choisibles",
+        "amount":  1000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Novembre |R122|H"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "TOTAL NET",
+        "amount":  675,
+        "currency":  "USD",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Novembre |R123|G"
+    },
+    {
+        "expense_date":  "2025-11-29",
+        "title":  "TOTAL NET",
+        "amount":  595500,
+        "currency":  "CDF",
+        "mode":  "",
+        "source_key":  "LIVRE2025|Novembre |R123|H"
+    },
+    {
+        "expense_date":  "2025-01-12",
+        "title":  "Papa ATUNGA",
+        "amount":  10000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Decembre|R7|H"
+    },
+    {
+        "expense_date":  "2025-01-12",
+        "title":  "Paiements d\u0027aptitude physique",
+        "amount":  15000,
+        "currency":  "CDF",
+        "mode":  "caisse",
+        "source_key":  "LIVRE2025|Decembre|R8|H"
+    }
+]

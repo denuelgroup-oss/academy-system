@@ -23,6 +23,7 @@ export default function Clients() {
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
   const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [count, setCount] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
@@ -32,11 +33,10 @@ export default function Clients() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  const PAGE_SIZE = 25;
-
   const load = async () => {
     setLoading(true);
-    const params = new URLSearchParams({ page, page_size: PAGE_SIZE });
+    const params = new URLSearchParams({ page, page_size: pageSize });
+    params.set('ordering', 'first_name,last_name');
     if (search) params.set('search', search);
     if (filterStatus) params.set('status', filterStatus);
     try {
@@ -52,7 +52,7 @@ export default function Clients() {
     } finally { setLoading(false); }
   };
 
-  useEffect(() => { load(); }, [page, filterStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { load(); }, [page, filterStatus, pageSize]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { setPage(1); load(); }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-generate invoice number for new clients based on name + month
@@ -116,7 +116,7 @@ export default function Clients() {
     load();
   };
 
-  const totalPages = Math.ceil(count / PAGE_SIZE);
+  const totalPages = Math.ceil(count / pageSize);
 
   // Calendar-accurate end date: uses month/year units so Feb stays correct
   const calcEndDate = (startDateStr, plan) => {
@@ -188,6 +188,20 @@ export default function Clients() {
   const filteredClasses = form.plan
     ? classes.filter(c => (c.plans || []).includes(parseInt(form.plan, 10)))
     : classes;
+  const sortedClients = [...clients].sort((a, b) => {
+    const nameA = (a?.full_name || `${a?.first_name || ''} ${a?.last_name || ''}`.trim() || '').toLowerCase();
+    const nameB = (b?.full_name || `${b?.first_name || ''} ${b?.last_name || ''}`.trim() || '').toLowerCase();
+    return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+  });
+  const sortedSubscriptionPlans = [...subscriptionPlans].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedOneTimePlans = [...oneTimePlans].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedFilteredClasses = [...filteredClasses].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
 
   return (
     <div>
@@ -230,7 +244,7 @@ export default function Clients() {
               <tbody>
                 {clients.length === 0 ? (
                   <tr><td colSpan={8}><div className="empty-state"><div className="icon"><FaUsers /></div><h3>No clients found</h3><p>Add your first client using the button above</p></div></td></tr>
-                ) : clients.map(c => (
+                ) : sortedClients.map(c => (
                   <tr key={c.id}>
                     <td>
                       <div style={{ fontWeight: 600 }}>
@@ -350,7 +364,7 @@ export default function Clients() {
               <label>Subscription Plan</label>
               <select className="form-control" value={form.plan} onChange={e => handlePlanChange(e.target.value)}>
                 <option value="">— Select subscription plan —</option>
-                {subscriptionPlans.map(p => <option key={p.id} value={p.id}>{p.name} ({p.price} {p.currency})</option>)}
+                {sortedSubscriptionPlans.map(p => <option key={p.id} value={p.id}>{p.name} ({p.price} {p.currency})</option>)}
               </select>
             </div>
             <div className="form-group">
@@ -362,7 +376,7 @@ export default function Clients() {
                 value={(form.one_time_plans || []).map(String)}
                 onChange={handleOneTimePlansChange}
               >
-                {oneTimePlans.map(p => <option key={p.id} value={p.id}>{p.name} ({p.price} {p.currency})</option>)}
+                {sortedOneTimePlans.map(p => <option key={p.id} value={p.id}>{p.name} ({p.price} {p.currency})</option>)}
               </select>
               <small style={{ color: 'var(--text-muted)' }}>Hold Ctrl (or Cmd) to select multiple one-time plans.</small>
             </div>
@@ -370,7 +384,7 @@ export default function Clients() {
               <label>Class</label>
               <select className="form-control" value={form.academy_class} onChange={e => setForm({ ...form, academy_class: e.target.value })}>
                 <option value="">— Select class —</option>
-                {filteredClasses.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                {sortedFilteredClasses.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
             <div className="form-group">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaEdit, FaTrash, FaSearch, FaLayerGroup } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaSearch, FaLayerGroup } from 'react-icons/fa';
 import api from '../../api/axios';
 import Modal from '../../components/common/Modal';
 import StatusBadge from '../../components/common/StatusBadge';
@@ -48,6 +48,9 @@ export default function Plans() {
     const matchesMenu = p.plan_type === planMenu;
     return matchesSearch && matchesMenu;
   });
+  const sortedFiltered = [...filtered].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
 
   const openCreate = () => {
     setEditing(null);
@@ -212,7 +215,7 @@ export default function Plans() {
                   <tr><td colSpan={9}>
                     <div className="empty-state"><div className="icon"><FaLayerGroup /></div><h3>No plans found</h3></div>
                   </td></tr>
-                ) : filtered.map(p => (
+                ) : sortedFiltered.map(p => (
                   <tr key={p.id}>
                     <td>
                       <div style={{ fontWeight: 600 }}>{p.name}</div>
@@ -231,7 +234,7 @@ export default function Plans() {
                     <td><StatusBadge value={p.is_active ? 'active' : 'inactive'} /></td>
                     <td>
                       <div className="table-actions">
-                        <button className="btn btn-outline btn-sm btn-icon" onClick={() => openEdit(p)}><FaEdit /></button>
+                        <button className="btn btn-outline btn-sm" onClick={() => openEdit(p)}>Edit</button>
                         <button className="btn btn-danger btn-sm btn-icon" onClick={() => handleDelete(p.id)}><FaTrash /></button>
                       </div>
                     </td>
@@ -244,11 +247,11 @@ export default function Plans() {
       </div>
 
       {/* Plan Cards View */}
-      {!loading && filtered.length > 0 && (
+      {!loading && sortedFiltered.length > 0 && (
         <div style={{ marginTop: 24 }}>
           <div className="card-title" style={{ marginBottom: 16, fontSize: 16, fontWeight: 700 }}>Plan Overview Cards</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-            {filtered.map(p => (
+            {sortedFiltered.map(p => (
               <div key={p.id} className="card" style={{ borderTop: `4px solid ${p.is_active ? 'var(--green)' : 'var(--border)'}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 12 }}>
                   <div>

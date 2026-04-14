@@ -26,8 +26,9 @@ export const AuthProvider = ({ children }) => {
     const res = await api.post('/auth/token/', { username, password });
     localStorage.setItem('access_token', res.data.access);
     localStorage.setItem('refresh_token', res.data.refresh);
-    setUser(res.data.user);
-    return res.data.user;
+    const meRes = await api.get('/auth/profile/me/');
+    setUser(meRes.data);
+    return meRes.data;
   };
 
   const logout = async () => {

@@ -13,6 +13,7 @@ export default function ReceivedPayments() {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState(EMPTY);
@@ -23,22 +24,24 @@ export default function ReceivedPayments() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const r = await api.get('/sales/payments/', { params: { page, ordering: '-payment_date' } });
+      const r = await api.get('/sales/payments/', { params: { page, page_size: pageSize, ordering: '-payment_date' } });
       const data = r.data.results || r.data;
       setPayments(data);
-      setTotalPages(Math.ceil((r.data.count || data.length) / 25));
+      setTotalPages(Math.ceil((r.data.count || data.length) / pageSize));
       setTotalReceived(data.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0));
     } finally { setLoading(false); }
-  }, [page]);
+  }, [page, pageSize]);
 
   useEffect(() => { load(); }, [load]);
   useEffect(() => {
     Promise.all([
+      api.get('/sales/invoices/?status=draft&page_size=200'),
       api.get('/sales/invoices/?status=partial&page_size=200'),
       api.get('/sales/invoices/?status=sent&page_size=200'),
       api.get('/sales/invoices/?status=overdue&page_size=200'),
-    ]).then(([r1, r2, r3]) => {
+    ]).then(([r0, r1, r2, r3]) => {
       const merged = [
+        ...(r0.data.results || r0.data),
         ...(r1.data.results || r1.data),
         ...(r2.data.results || r2.data),
         ...(r3.data.results || r3.data),
@@ -59,6 +62,26 @@ export default function ReceivedPayments() {
     const invoice = invoices.find(i => String(i.id) === String(invoiceId));
     const amountFromQuery = params.get('amount');
     const currencyFromQuery = params.get('currency');
+
+    if (!invoice) {
+      // If the requested invoice isn't in the loaded status buckets, fetch it directly
+      // so one-time payment flow cannot silently fall back to another invoice.
+      api.get(`/sales/invoices/${invoiceId}/`).then(({ data }) => {
+        setInvoices(prev => {
+          if (prev.some(i => String(i.id) === String(data.id))) return prev;
+          return [data, ...prev];
+        });
+        setForm(f => ({
+          ...f,
+          invoice: invoiceId,
+          amount: amountFromQuery || data?.amount_due || '',
+          currency: currencyFromQuery || data?.currency || f.currency,
+        }));
+        setErrors({});
+        setShowModal(true);
+      });
+      return;
+    }
 
     setForm(f => ({
       ...f,
@@ -96,6 +119,13 @@ export default function ReceivedPayments() {
     await api.delete(`/sales/payments/${id}/`); load();
   };
 
+  const sortedPayments = [...payments].sort((a, b) =>
+    String(a?.client_name || '').localeCompare(String(b?.client_name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedInvoices = [...invoices].sort((a, b) =>
+    String(a?.client_name || '').localeCompare(String(b?.client_name || ''), undefined, { sensitivity: 'base' })
+  );
+
   return (
     <div>
       <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -125,7 +155,7 @@ export default function ReceivedPayments() {
                 <tbody>
                   {payments.length === 0 ? (
                     <tr><td colSpan={8}><div className="empty-state"><div className="icon"><FaMoneyBillWave /></div><h3>No payments yet</h3></div></td></tr>
-                  ) : payments.map(p => (
+                  ) : sortedPayments.map(p => (
                     <tr key={p.id}>
                       <td>{p.payment_date}</td>
                       <td style={{ fontWeight: 700, color: 'var(--primary)' }}>{p.invoice_number}</td>
@@ -160,7 +190,7 @@ export default function ReceivedPayments() {
             <label>Invoice *</label>
             <select className="form-control" value={form.invoice} onChange={e => set('invoice', e.target.value)}>
               <option value="">— Select Invoice —</option>
-              {invoices.map(inv => <option key={inv.id} value={inv.id}>{inv.invoice_number} — {inv.client_name} (Due: {inv.amount_due} {inv.currency})</option>)}
+              {sortedInvoices.map(inv => <option key={inv.id} value={inv.id}>{inv.invoice_number} — {inv.client_name} (Due: {inv.amount_due} {inv.currency})</option>)}
             </select>
             {errors.invoice && <div className="form-error">{errors.invoice}</div>}
           </div>

@@ -71,6 +71,11 @@ export default function Users() {
   };
 
   const getRoleColor = (role) => ({ admin: '#dc2626', coach: '#16a34a', staff: '#2563eb', receptionist: '#7c3aed' }[role] || '#6b7280');
+  const sortedUsers = [...users].sort((a, b) => {
+    const nameA = `${a?.first_name || ''} ${a?.last_name || ''}`.trim() || a?.username || '';
+    const nameB = `${b?.first_name || ''} ${b?.last_name || ''}`.trim() || b?.username || '';
+    return String(nameA).localeCompare(String(nameB), undefined, { sensitivity: 'base' });
+  });
 
   return (
     <div>
@@ -98,7 +103,7 @@ export default function Users() {
                   <tr><th>Name</th><th>Username</th><th>Email</th><th>Role</th><th>Phone</th><th>Hire Date</th><th>Actions</th></tr>
                 </thead>
                 <tbody>
-                  {users.map(u => (
+                  {sortedUsers.map(u => (
                     <tr key={u.id}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Schedule</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="class-schedule" class="dashboard-page module-page">
+  <div class="dashboard-layout">
+    <aside class="academy-sidebar" aria-label="Sidebar navigation">
+      <div class="academy-brand sidebar-brand">
+        <span class="club-badge">GTPro</span>
+        <div>
+          <h1>GTPro</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plans.html">Plans</a>
+        <a href="classes.html">Classes</a>
+        <a class="active" href="class-schedule.html">Class Schedule</a>
+        <a href="students.html">Students</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="renewals.html">Renewals</a>
+        <div class="sidebar-group">
+          <button type="button" class="sidebar-group-title" aria-expanded="false">
+            <span>Sales</span>
+            <span class="sidebar-caret">+</span>
+          </button>
+          <div class="sidebar-submenu">
+            <a href="payments.html?tab=invoices">Invoices</a>
+            <a href="payments.html?tab=pending">Pending Payment</a>
+            <a href="payments.html?tab=received">Received Payment</a>
+          </div>
+        </div>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <a class="logout-link sidebar-logout" href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="academy-header module-header">
+        <div class="academy-brand">
+          <span class="club-badge">GTPro</span>
+          <div>
+            <h1>Class Schedule</h1>
+            <p>Weekly training schedule and class assignments</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-shell">
+        <section class="module-card">
+          <div id="msg" class="msg"></div>
+
+          <div id="scheduleFormModal" class="plan-form-modal hidden" aria-hidden="true">
+            <div class="plan-form-card">
+              <input type="hidden" id="scheduleId">
+              <div class="plan-form-head">
+                <div>
+                  <h3 id="scheduleFormTitle">Add Class Schedule</h3>
+                  <p id="scheduleFormHint" class="hint">Timings will be applied for entered date range. Upto can be left blank if these timings will continue till you wish to change in the future. Attendance can be marked for these timings in this date range only.</p>
+                </div>
+                <button class="plan-close-btn" type="button" onclick="closeScheduleForm()">Close</button>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label class="plan-label" for="scheduleClassId">Class *</label>
+                  <select id="scheduleClassId">
+                    <option value="">Select class</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="plan-label">Center</label>
+                  <input id="scheduleCenterDisplay" class="schedule-center-display" type="text" readonly placeholder="Auto-filled from class">
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label class="plan-label" for="scheduleFromDate">Date *</label>
+                  <input id="scheduleFromDate" type="date">
+                </div>
+                <div>
+                  <label class="plan-label" for="scheduleUptoDate">Upto date (optional)</label>
+                  <input id="scheduleUptoDate" type="date">
+                </div>
+              </div>
+
+              <div class="plan-section-title">Set Timings</div>
+              <div class="schedule-day-list">
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleSunStart">Sun</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleSunStart" type="time" aria-label="Sun start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleSunEnd" type="time" aria-label="Sun end time">
+                  </div>
+                </div>
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleMonStart">Mon</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleMonStart" type="time" aria-label="Mon start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleMonEnd" type="time" aria-label="Mon end time">
+                  </div>
+                </div>
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleTueStart">Tue</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleTueStart" type="time" aria-label="Tue start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleTueEnd" type="time" aria-label="Tue end time">
+                  </div>
+                </div>
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleWedStart">Wed</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleWedStart" type="time" aria-label="Wed start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleWedEnd" type="time" aria-label="Wed end time">
+                  </div>
+                </div>
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleThuStart">Thu</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleThuStart" type="time" aria-label="Thu start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleThuEnd" type="time" aria-label="Thu end time">
+                  </div>
+                </div>
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleFriStart">Fri</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleFriStart" type="time" aria-label="Fri start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleFriEnd" type="time" aria-label="Fri end time">
+                  </div>
+                </div>
+                <div class="schedule-day-row">
+                  <label class="schedule-day-label" for="scheduleSatStart">Sat</label>
+                  <div class="schedule-time-pair">
+                    <input id="scheduleSatStart" type="time" aria-label="Sat start time">
+                    <span class="schedule-time-sep">-</span>
+                    <input id="scheduleSatEnd" type="time" aria-label="Sat end time">
+                  </div>
+                </div>
+              </div>
+
+              <div class="plan-form-actions">
+                <button type="button" class="secondary-btn" onclick="closeScheduleForm()">Cancel</button>
+                <button id="scheduleSubmitBtn" type="button" onclick="submitScheduleForm()">Save Schedule</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="schedule-filter-bar">
+            <div class="schedule-filter-group">
+              <select id="scheduleDateFilter" title="Filter by date" onchange="onScheduleDateFilterChange()">
+                <option value="all">All Dates</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="custom">Custom date</option>
+              </select>
+              <input type="date" id="scheduleCustomDate" class="schedule-custom-date hidden" title="Custom date" placeholder="YYYY-MM-DD" onchange="applyScheduleFilters()">
+            </div>
+            <div class="schedule-filter-group">
+              <select id="scheduleCenterFilter" title="Filter by center" onchange="applyScheduleFilters()">
+                <option value="">All Centers</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="plans-summary">
+            <span id="scheduleCount">0 schedules</span>
+          </div>
+
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Center</th>
+                <th>Coaches</th>
+                <th>Date</th>
+                <th>Timing</th>
+                <th>Details</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTable"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+

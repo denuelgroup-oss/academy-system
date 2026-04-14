@@ -347,13 +347,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 @media (max-width: 768px) {
   :root { --sidebar-w: 0px; }
   .app-main { margin-left: 0; }
-  .navbar   { left: 0; }
+  .navbar   { display: none; left: 0; }
   .sidebar  { transform: translateX(-100%); transition: transform var(--transition); }
   .sidebar.open { transform: none; --sidebar-w: 260px; }
   .form-grid { grid-template-columns: 1fr; }
   .charts-grid { grid-template-columns: 1fr; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
-  .app-content { padding: 80px 16px 24px; }
+  .app-content { padding: 16px 16px 24px; }
 }
 @media (max-width: 480px) {
   .stat-grid { grid-template-columns: 1fr; }

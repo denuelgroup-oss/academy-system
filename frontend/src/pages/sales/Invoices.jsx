@@ -15,6 +15,7 @@ export default function Invoices() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [showView, setShowView] = useState(false);
@@ -28,14 +29,14 @@ export default function Invoices() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const params = { page, search };
+    const params = { page, page_size: pageSize, search };
     if (statusFilter) params.status = statusFilter;
     try {
       const r = await api.get('/sales/invoices/', { params });
       setInvoices(r.data.results || r.data);
-      setTotalPages(Math.ceil((r.data.count || (r.data.results || r.data).length) / 25));
+      setTotalPages(Math.ceil((r.data.count || (r.data.results || r.data).length) / pageSize));
     } finally { setLoading(false); }
-  }, [page, search, statusFilter]);
+  }, [page, pageSize, search, statusFilter]);
 
   useEffect(() => { load(); }, [load]);
   useEffect(() => { api.get('/clients/?page_size=200').then(r => setClients(r.data.results || r.data)); }, []);
@@ -82,6 +83,12 @@ export default function Invoices() {
   };
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const sortedInvoices = [...invoices].sort((a, b) =>
+    String(a?.client_name || '').localeCompare(String(b?.client_name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedClients = [...clients].sort((a, b) =>
+    String(a?.full_name || '').localeCompare(String(b?.full_name || ''), undefined, { sensitivity: 'base' })
+  );
 
   useEffect(() => {
     const invoiceFromQuery = new URLSearchParams(location.search).get('invoice');
@@ -126,7 +133,7 @@ export default function Invoices() {
                 <tbody>
                   {invoices.length === 0 ? (
                     <tr><td colSpan={8}><div className="empty-state"><div className="icon"><FaFileInvoiceDollar /></div><h3>No invoices</h3></div></td></tr>
-                  ) : invoices.map(inv => (
+                  ) : sortedInvoices.map(inv => (
                     <tr key={inv.id}>
                       <td style={{ fontWeight: 700, color: 'var(--primary)' }}>{inv.invoice_number}</td>
                       <td>
@@ -168,7 +175,7 @@ export default function Invoices() {
             <label>Client *</label>
             <select className="form-control" value={form.client} onChange={e => set('client', e.target.value)}>
               <option value="">— Select Client —</option>
-              {clients.map(c => <option key={c.id} value={c.id}>{c.full_name}</option>)}
+              {sortedClients.map(c => <option key={c.id} value={c.id}>{c.full_name}</option>)}
             </select>
             {errors.client && <div className="form-error">{errors.client}</div>}
           </div>

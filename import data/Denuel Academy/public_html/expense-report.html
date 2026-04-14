@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Report</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="dashboard-page" data-page="expense-report">
+  <div class="container">
+    <div class="topbar">
+      <div>Academy Management System</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a href="revenue-report.html">Revenue Report</a>
+        <a href="expense-report.html" class="active">Expense Report</a>
+      </nav>
+    </div>
+    <main>
+      <section class="exp-panel exp-list-panel" id="expense-report">
+        <div class="exp-panel-head exp-list-head">
+          <h3>Expenses Report</h3>
+          <input id="reportExpenseFrom" type="hidden">
+          <input id="reportExpenseTo" type="hidden">
+        </div>
+        <div class="exp-grid">
+          <section class="exp-panel">
+            <h3>By Month</h3>
+            <table class="plans-table">
+              <thead><tr><th>Month</th><th>Total</th></tr></thead>
+              <tbody id="expenseReportByMonth"></tbody>
+            </table>
+          </section>
+          <section class="exp-panel">
+            <h3>By Category</h3>
+            <table class="plans-table">
+              <thead><tr><th>Category</th><th>Total</th></tr></thead>
+              <tbody id="expenseReportByCategory"></tbody>
+            </table>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadExpenseReportPreview();
+    });
+  </script>
+</body>
+</html>

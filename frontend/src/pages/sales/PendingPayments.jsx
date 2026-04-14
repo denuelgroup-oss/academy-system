@@ -38,6 +38,9 @@ export default function PendingPayments() {
   };
 
   const data = tab === 'pending' ? pending : overdue;
+  const sortedData = [...data].sort((a, b) =>
+    String(a?.client_name || '').localeCompare(String(b?.client_name || ''), undefined, { sensitivity: 'base' })
+  );
   const pendingInvoicesTotal = pending.reduce((sum, inv) => sum + parseFloat(inv.amount_due || 0), 0);
   const overdueInvoicesTotal = overdue.reduce((sum, inv) => sum + parseFloat(inv.amount_due || 0), 0);
   const oneTimePlanPrices = Object.fromEntries(oneTimePlans.map(p => [p.id, parseFloat(p.price || 0)]));
@@ -111,7 +114,7 @@ export default function PendingPayments() {
         </div>
 
         {loading ? <div className="loading-wrap"><div className="spinner" /></div> : (
-          data.length === 0 ? (
+          sortedData.length === 0 ? (
             <div className="empty-state">
               <div className="icon" style={{ color: '#16a34a' }}><FaFileInvoiceDollar /></div>
               <h3>All clear!</h3>
@@ -124,7 +127,7 @@ export default function PendingPayments() {
                   <tr><th>Invoice #</th><th>Client</th><th>Total</th><th>Paid</th><th>Amount Due</th><th>Due Date</th><th>Status</th><th>Actions</th></tr>
                 </thead>
                 <tbody>
-                  {data.map(inv => {
+                  {sortedData.map(inv => {
                     const daysOverdue = Math.ceil((new Date() - new Date(inv.due_date)) / 86400000);
                     return (
                       <tr key={inv.id}>

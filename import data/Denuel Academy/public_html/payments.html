@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payments</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="payments" class="dashboard-page module-page">
+  <div class="dashboard-layout">
+    <aside class="academy-sidebar" aria-label="Sidebar navigation">
+      <div class="academy-brand sidebar-brand">
+        <span class="club-badge">GTPro</span>
+        <div>
+          <h1>GTPro</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plans.html">Plans</a>
+        <a href="classes.html">Classes</a>
+        <a href="class-schedule.html">Class Schedule</a>
+        <a href="students.html">Students</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="renewals.html">Renewals</a>
+        <div class="sidebar-group">
+          <button type="button" class="sidebar-group-title" aria-expanded="false">
+            <span>Sales</span>
+            <span class="sidebar-caret">+</span>
+          </button>
+          <div class="sidebar-submenu">
+            <a href="payments.html?tab=invoices">Invoices</a>
+            <a href="payments.html?tab=pending">Pending Payment</a>
+            <a href="payments.html?tab=received">Received Payment</a>
+          </div>
+        </div>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <a class="logout-link sidebar-logout" href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="academy-header module-header">
+        <div class="academy-brand">
+          <span class="club-badge">GTPro</span>
+          <div>
+            <h1>Payments</h1>
+            <p>Fee collection and history</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-shell">
+        <section class="module-card">
+          <div id="msg" class="msg"></div>
+
+          <h3 id="paymentsListTitle">Invoices</h3>
+          <div id="paymentHistoryFilters" class="row">
+            <div id="paymentStudentFilterWrap"><select id="filterStudent" title="Filter by student"></select></div>
+            <div id="paymentSearchWrap" class="hidden">
+              <input id="paymentSearchInput" class="pending-search-input" type="search" placeholder="Search received payments by student, plan, invoice..." aria-label="Search received payments" onkeydown="if(event.key==='Enter'){filterPaymentsBySearch();}">
+            </div>
+            <div id="paymentFilterBtnWrap"><button id="paymentFilterBtn" onclick="filterPayments()">Show History</button></div>
+            <div id="paymentSearchBtnWrap" class="hidden"><button id="paymentSearchBtn" class="pending-search-btn" type="button" onclick="filterPaymentsBySearch()">Search</button></div>
+            <div><button onclick="resetPaymentsFilters()">View All</button></div>
+          </div>
+
+          <div id="pendingToolbar" class="payments-toolbar hidden" aria-label="Pending payment toolbar">
+            <div class="payments-toolbar-center">
+              <label for="pendingStatusFilter" class="payments-toolbar-label">Filter</label>
+              <select id="pendingStatusFilter" title="Filter pending payments">
+                <option value="all">All</option>
+                <option value="overdue">Overdue</option>
+                <option value="today">Due today</option>
+                <option value="this_week">Due this week</option>
+              </select>
+              <input id="pendingSearchInput" class="pending-search-input" type="search" placeholder="Search student, plan, invoice..." aria-label="Search pending payments" onkeydown="if(event.key==='Enter'){filterPendingPayments();}">
+              <button type="button" class="pending-search-btn" onclick="filterPendingPayments()">Search</button>
+            </div>
+            <div id="pendingSummary" class="payments-toolbar-summary">Total: L 0.00 | 0 Pending</div>
+          </div>
+
+          <table>
+            <thead>
+              <tr id="paymentsHeadRow"><th><input type="checkbox" aria-label="Select all invoices"></th><th>Name</th><th>Invoice date</th><th>Invoice no</th><th>Description</th><th>Due Date</th><th>Amount</th><th>Balance Due</th></tr>
+            </thead>
+            <tbody id="paymentsTable"></tbody>
+          </table>
+
+          <div id="pendingPaymentModal" class="plan-form-modal hidden" aria-hidden="true" onclick="dismissPendingPaymentModal(event)">
+            <div class="plan-form-dialog payment-modal-dialog">
+              <div class="plan-form-header">
+                <div>
+                  <h3>Make Payment</h3>
+                  <p class="payment-modal-hint">Record the pending payment for the selected student.</p>
+                </div>
+                <button type="button" class="plan-form-close" onclick="closePendingPaymentModal()" aria-label="Close">&times;</button>
+              </div>
+              <div class="plan-form-body">
+                <input id="pendingPaymentStudentId" type="hidden">
+                <input id="pendingPaymentPeriodStart" type="hidden">
+                <input id="pendingPaymentPeriodEnd" type="hidden">
+                <div class="exp-form-grid">
+                  <div class="plan-form-group">
+                    <label class="plan-label" for="pendingPaymentStudentName">Student</label>
+                    <input id="pendingPaymentStudentName" class="plan-input" type="text" readonly>
+                  </div>
+                  <div class="plan-form-group">
+                    <label class="plan-label" for="pendingPaymentAmount">Amount</label>
+                    <input id="pendingPaymentAmount" class="plan-input" type="number" min="0" step="0.01" placeholder="0.00">
+                  </div>
+                </div>
+                <div class="exp-form-grid">
+                  <div class="plan-form-group">
+                    <label class="plan-label" for="pendingPaymentMode">Mode of Payment</label>
+                    <select id="pendingPaymentMode" class="plan-input">
+                      <option value="cash">Cash</option>
+                      <option value="cheque">Cheque</option>
+                      <option value="other">Other</option>
+                      <option value="card">Card</option>
+                      <option value="bank_transfer">Bank Transfer</option>
+                      <option value="online">Online</option>
+                    </select>
+                  </div>
+                  <div class="plan-form-group">
+                    <label class="plan-label" for="pendingPaymentDate">Date</label>
+                    <input id="pendingPaymentDate" class="plan-input" type="datetime-local">
+                  </div>
+                </div>
+                <div class="plan-form-group">
+                  <label class="plan-label" for="pendingPaymentNote">Note (for internal use)</label>
+                  <textarea id="pendingPaymentNote" class="plan-input" rows="3" maxlength="500" placeholder="Optional note"></textarea>
+                </div>
+              </div>
+              <div class="plan-form-footer">
+                <button type="button" class="plan-action-btn" onclick="submitPendingPaymentModal()">Save Payment</button>
+                <button type="button" class="plan-action-btn danger" onclick="closePendingPaymentModal()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+

@@ -38,6 +38,12 @@ export default function Classes() {
   const [attaching, setAttaching] = useState(false);
   const [attachError, setAttachError] = useState('');
 
+  const toArray = (payload) => {
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.results)) return payload.results;
+    return [];
+  };
+
   const load = async () => {
     setLoading(true);
     try {
@@ -46,9 +52,9 @@ export default function Classes() {
         api.get('/auth/users/?role=coach'),
         api.get('/plans/?is_active=true&ordering=name'),
       ]);
-      setClasses(classRes.data.results || classRes.data);
-      setCoaches(coachRes.data.results || coachRes.data);
-      setPlans(planRes.data.results || planRes.data);
+      setClasses(toArray(classRes.data));
+      setCoaches(toArray(coachRes.data));
+      setPlans(toArray(planRes.data));
     } finally { setLoading(false); }
   };
 
@@ -81,6 +87,18 @@ export default function Classes() {
   const filtered = classes.filter(c =>
     c.name.toLowerCase().includes(search.toLowerCase()) ||
     (c.plan_names || []).join(' ').toLowerCase().includes(search.toLowerCase())
+  );
+  const sortedFiltered = [...filtered].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedClasses = [...classes].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedPlans = [...plans].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedCoaches = [...coaches].sort((a, b) =>
+    String(a?.full_name || a?.username || '').localeCompare(String(b?.full_name || b?.username || ''), undefined, { sensitivity: 'base' })
   );
 
   const openCreate = () => {
@@ -209,7 +227,7 @@ export default function Classes() {
                   <tr><td colSpan={7}>
                     <div className="empty-state"><div className="icon"><FaFutbol /></div><h3>No classes found</h3></div>
                   </td></tr>
-                ) : filtered.map(c => (
+                ) : sortedFiltered.map(c => (
                   <tr key={c.id}>
                     <td>
                       <div style={{ fontWeight: 600 }}>{c.name}</div>
@@ -220,7 +238,7 @@ export default function Classes() {
                     <td>
                       {(c.plan_names || []).length ? (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                          {c.plan_names.map((p) => <span key={p} className="badge-pill badge-coach">{p}</span>)}
+                          {[...(c.plan_names || [])].sort((a, b) => String(a).localeCompare(String(b), undefined, { sensitivity: 'base' })).map((p) => <span key={p} className="badge-pill badge-coach">{p}</span>)}
                         </div>
                       ) : '—'}
                     </td>
@@ -277,7 +295,7 @@ export default function Classes() {
             disabled={classes.length === 0}
           >
             <option value="">— Select class —</option>
-            {classes.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {sortedClasses.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
           {classes.length === 0 && (
             <small style={{ color: 'var(--text-muted)' }}>No class exists yet. Use Create New Class Instead.</small>
@@ -323,7 +341,7 @@ export default function Classes() {
                     onChange={(e) => setPlanToAdd(e.target.value)}
                   >
                     <option value="">— Select plan to add —</option>
-                    {plans.map((p) => (
+                    {sortedPlans.map((p) => (
                       <option key={p.id} value={p.id}>
                         {p.name} ({p.price} {p.currency})
                         {(form.plans || []).includes(p.id) ? ' - already attached' : ''}
@@ -342,7 +360,7 @@ export default function Classes() {
               <label>Assign Coach</label>
               <select className="form-control" value={form.coach} onChange={e => setForm({ ...form, coach: e.target.value })}>
                 <option value="">— No coach assigned —</option>
-                {coaches.map(c => <option key={c.id} value={c.id}>{c.full_name || c.username}</option>)}
+                {sortedCoaches.map(c => <option key={c.id} value={c.id}>{c.full_name || c.username}</option>)}
               </select>
             </div>
             <div className="form-group form-full">

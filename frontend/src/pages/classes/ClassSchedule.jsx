@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState } from 'react';
+﻿import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaCalendarAlt, FaPlus, FaEdit, FaTrash, FaUserCheck } from 'react-icons/fa';
 import api from '../../api/axios';
@@ -56,6 +56,12 @@ export default function ClassSchedule() {
   const navigate = useNavigate();
   const autoOpenedRef = useRef(false);
 
+  const toArray = (payload) => {
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.results)) return payload.results;
+    return [];
+  };
+
   const selectedDate = useMemo(() => {
     if (datePreset === 'custom') {
       const d = new Date(customDate);
@@ -70,7 +76,7 @@ export default function ClassSchedule() {
   const selectedIsoDate = useMemo(() => toIsoDate(selectedDate), [selectedDate]);
   const selectedDay = DAYS[selectedDate.getDay()];
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -80,15 +86,14 @@ export default function ClassSchedule() {
         api.get(`/classes/schedules/?${params}`),
         api.get('/classes/active/'),
       ]);
-      setSchedules(schRes.data.results || schRes.data);
-      setClasses(classRes.data);
+      setSchedules(toArray(schRes.data));
+      setClasses(toArray(classRes.data));
     } finally {
       setLoading(false);
     }
-  };
+  }, [filterCenter, selectedDay]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { load(); }, [filterCenter, selectedDay]);
+  useEffect(() => { load(); }, [load]);
 
   // Detect ?new_class=<id> from redirect after class creation — auto-open schedule form
   useEffect(() => {

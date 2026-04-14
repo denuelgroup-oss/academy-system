@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="settings" class="dashboard-page module-page">
+  <div class="dashboard-layout">
+    <aside class="academy-sidebar" aria-label="Sidebar navigation">
+      <div class="academy-brand sidebar-brand">
+        <span class="club-badge">GTPro</span>
+        <div>
+          <h1>GTPro</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plans.html">Plans</a>
+        <a href="classes.html">Classes</a>
+        <a href="class-schedule.html">Class Schedule</a>
+        <a href="students.html">Students</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="renewals.html">Renewals</a>
+        <div class="sidebar-group">
+          <button type="button" class="sidebar-group-title" aria-expanded="false">
+            <span>Sales</span>
+            <span class="sidebar-caret">+</span>
+          </button>
+          <div class="sidebar-submenu">
+            <a href="payments.html?tab=invoices">Invoices</a>
+            <a href="payments.html?tab=pending">Pending Payment</a>
+            <a href="payments.html?tab=received">Received Payment</a>
+          </div>
+        </div>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a class="active" href="settings.html">Settings</a>
+      </nav>
+      <a class="logout-link sidebar-logout" href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="academy-header module-header">
+        <div class="academy-brand">
+          <span class="club-badge">GTPro</span>
+          <div>
+            <h1>Settings</h1>
+            <p>Configure academy-wide preferences</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-shell">
+        <section class="module-card">
+          <div id="msg" class="msg"></div>
+
+          <div class="settings-grid">
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#127970;</span>
+                <h3>Organization</h3>
+              </div>
+              <ul class="settings-links">
+                <li>About us</li>
+                <li>Contact info</li>
+                <li>Sections</li>
+                <li>Social info</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#9998;</span>
+                <h3>Customization</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Message templates</li>
+                <li>Performance templates</li>
+                <li>Wordings</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#9881;</span>
+                <h3>Preferences</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Plan</li>
+                <li>Clients</li>
+                <li>Attendance</li>
+                <li>Performance</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#8853;</span>
+                <h3>Lists</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Centers</li>
+                <li>Expense Categories</li>
+                <li>Levels</li>
+                <li>Meet links</li>
+                <li>Skills</li>
+                <li>Tags</li>
+                <li>Labels for plan</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#128196;</span>
+                <h3>Invoices</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Company Details</li>
+                <li>Tax Rates</li>
+                <li>AcademyPRO Invoice</li>
+                <li>Add Item</li>
+                <li>Item Invoice</li>
+              </ul>
+            </article>
+
+            <article class="settings-card settings-card--highlight">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#8644;</span>
+                <h3>Currency Conversion</h3>
+              </div>
+              <p class="settings-card-copy">Set the manual exchange rate used for converting CDF to USD.</p>
+              <div class="settings-rate-grid">
+                <div>
+                  <label class="plan-label" for="cdfToUsdRate">CDF to USD Rate</label>
+                  <input id="cdfToUsdRate" type="number" min="0.00000001" step="0.00000001" placeholder="0.00035">
+                  <small class="hint">Example: 1 CDF = 0.00035 USD</small>
+                </div>
+                <div>
+                  <label class="plan-label" for="usdToCdfRate">USD to CDF Rate</label>
+                  <input id="usdToCdfRate" type="number" min="0.00000001" step="0.00000001" placeholder="2857.14285714">
+                  <small class="hint">Example: 1 USD = 2857.14285714 CDF</small>
+                </div>
+              </div>
+              <div class="settings-rate-grid settings-rate-grid--single">
+                <div>
+                  <label class="plan-label" for="rateUpdatedAt">Last Updated</label>
+                  <input id="rateUpdatedAt" type="text" readonly placeholder="Not set yet">
+                </div>
+              </div>
+              <div class="plan-form-actions settings-actions-row">
+                <button id="saveRateBtn" type="button" onclick="saveExchangeRateSettings()">Save Exchange Rate</button>
+              </div>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#128179;</span>
+                <h3>Payments</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Payment Gateway</li>
+                <li>Bank Details</li>
+                <li>UPI id</li>
+                <li>Auto-fill Due Date</li>
+                <li>Late Fee</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#128276;</span>
+                <h3>Notifications</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Clients</li>
+                <li>Staff</li>
+                <li>Banner Message</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#128101;</span>
+                <h3>Staff</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Role</li>
+                <li>Attendance</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#9200;</span>
+                <h3>Reminders</h3>
+              </div>
+              <ul class="settings-links">
+                <li>AcademyPRO</li>
+                <li>Class</li>
+                <li>Payment</li>
+                <li>Renewal</li>
+              </ul>
+            </article>
+
+            <article class="settings-card">
+              <div class="settings-card-head">
+                <span class="settings-card-icon">&#9776;</span>
+                <h3>Miscellaneous</h3>
+              </div>
+              <ul class="settings-links">
+                <li>Email</li>
+                <li>Biometric</li>
+                <li>Enquiry API Integration</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+

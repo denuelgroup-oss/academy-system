@@ -2,8 +2,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import JsonResponse
+
+
+def root_view(_request):
+    return JsonResponse(
+        {
+            'status': 'ok',
+            'message': 'AcademyPRO backend is running',
+            'api_base': '/api/',
+            'admin': '/admin/',
+        }
+    )
 
 urlpatterns = [
+    path('', root_view),
     path('admin/', admin.site.urls),
     path('api/auth/', include('apps.authentication.urls')),
     path('api/plans/', include('apps.plans.urls')),

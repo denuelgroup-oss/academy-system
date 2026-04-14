@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plans</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="plans" class="dashboard-page module-page">
+  <div class="dashboard-layout">
+    <aside class="academy-sidebar" aria-label="Sidebar navigation">
+      <div class="academy-brand sidebar-brand">
+        <span class="club-badge">GTPro</span>
+        <div>
+          <h1>GTPro</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html">Dashboard</a>
+        <a class="active" href="plans.html">Plans</a>
+        <a href="classes.html">Classes</a>
+        <a href="class-schedule.html">Class Schedule</a>
+        <a href="students.html">Students</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="renewals.html">Renewals</a>
+        <div class="sidebar-group">
+          <button type="button" class="sidebar-group-title" aria-expanded="false">
+            <span>Sales</span>
+            <span class="sidebar-caret">+</span>
+          </button>
+          <div class="sidebar-submenu">
+            <a href="payments.html?tab=invoices">Invoices</a>
+            <a href="payments.html?tab=pending">Pending Payment</a>
+            <a href="payments.html?tab=received">Received Payment</a>
+          </div>
+        </div>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <a class="logout-link sidebar-logout" href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="academy-header module-header">
+        <div class="academy-brand">
+          <span class="club-badge">GTPro</span>
+          <div>
+            <h1>Plans</h1>
+            <p>Training plans and subscription plans</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-shell">
+        <section class="module-card">
+          <div id="msg" class="msg"></div>
+
+          <div id="planFormModal" class="plan-form-modal hidden" aria-hidden="true">
+            <div class="plan-form-card">
+              <div class="plan-form-head">
+                <div>
+                  <h3 id="planFormTitle">Add Subscription Plan</h3>
+                  <p id="planFormHint" class="hint">Create a subscription plan with pricing and preference settings.</p>
+                </div>
+                <button class="plan-close-btn" type="button" onclick="closePlanForm()">Close</button>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label class="plan-label" for="planTitle">Plan Title *</label>
+                  <input id="planTitle" placeholder="U13">
+                </div>
+                <div id="planDurationWrap">
+                  <label class="plan-label" for="planDuration">Duration *</label>
+                  <select id="planDuration" title="Duration unit">
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                    <option value="month" selected>Month</option>
+                    <option value="year">Year</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="plan-section-title">Price details*</div>
+              <div class="row">
+                <div>
+                  <label class="plan-label" for="planFee">Fee *</label>
+                  <input id="planFee" type="number" min="0" step="0.01" placeholder="25.00">
+                </div>
+                <div>
+                  <label class="plan-label" for="planCurrency">Currency *</label>
+                  <select id="planCurrency" title="Currency">
+                    <option value="CDF" selected>CDF - Franc Congolais</option>
+                    <option value="USD">USD - US Dollar</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="planPreferencesBlock">
+                <div class="plan-section-title">Preferences</div>
+                <div class="row">
+                <div class="plan-toggle-card">
+                  <label class="plan-toggle-label" for="planAutoRenew">Auto-renew clients*</label>
+                  <select id="planAutoRenew" title="Auto renew clients">
+                    <option value="1">Yes</option>
+                    <option value="0" selected>No</option>
+                  </select>
+                </div>
+                <div class="plan-toggle-card">
+                  <label class="plan-toggle-label" for="planControlStartDates">Control available start dates*</label>
+                  <select id="planControlStartDates" title="Control available start dates">
+                    <option value="1">Yes</option>
+                    <option value="0" selected>No</option>
+                  </select>
+                </div>
+                </div>
+              </div>
+
+              <div class="plan-form-actions">
+                <button type="button" class="secondary-btn" onclick="closePlanForm()">Cancel</button>
+                <button id="planSubmitBtn" type="button" onclick="submitPlanForm()">Save Plan</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="plans-tabs" role="tablist" aria-label="Plan type tabs">
+            <button id="tab-subscription" class="plans-tab active" role="tab" aria-selected="true" onclick="loadPlans('subscription')">Subscription</button>
+            <button id="tab-one-time" class="plans-tab" role="tab" aria-selected="false" onclick="loadPlans('one-time')">One-time</button>
+          </div>
+
+          <div class="plans-summary">
+            <button id="plansAddBtn" class="plans-add-btn" onclick="openPlanForm()">Add Subscription Plan</button>
+            <span id="plansCount">0 plans</span>
+          </div>
+
+          <p id="plansTypeNote" class="hint">You can add plans in Subscription for now. Trial and One-time will be added next.</p>
+
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th id="plansHeadTitle">Title</th>
+                <th id="plansHeadClasses">Classes</th>
+                <th id="plansHeadClients">Clients</th>
+                <th id="plansHeadMakeUp">Make up</th>
+                <th id="plansHeadAmount">Amount</th>
+                <th id="plansHeadActions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="plansTable"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+

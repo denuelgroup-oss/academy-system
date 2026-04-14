@@ -16,7 +16,15 @@ export default function StaffAttendance() {
   useEffect(() => {
     api.get('/auth/users/?page_size=200').then(r => {
       const data = r.data.results || r.data;
-      setStaff(data.filter(u => u.profile?.role !== undefined));
+      setStaff(
+        data
+          .filter(u => u.profile?.role !== undefined)
+          .sort((a, b) => {
+            const nameA = `${a?.first_name || ''} ${a?.last_name || ''}`.trim() || a?.username || '';
+            const nameB = `${b?.first_name || ''} ${b?.last_name || ''}`.trim() || b?.username || '';
+            return String(nameA).localeCompare(String(nameB), undefined, { sensitivity: 'base' });
+          })
+      );
     });
   }, []);
 
@@ -27,13 +35,17 @@ export default function StaffAttendance() {
       .then(r => {
         const existing = {};
         (r.data || []).forEach(rec => { existing[rec.staff] = { status: rec.status, notes: rec.notes || '' }; });
-        setRecords(staff.map(u => ({
+        const mapped = staff.map(u => ({
           staff_id: u.id,
           name: `${u.first_name} ${u.last_name}`.trim() || u.username,
           role: u.profile?.role || 'staff',
           status: existing[u.id]?.status || 'present',
           notes: existing[u.id]?.notes || '',
-        })));
+        }));
+        const sorted = mapped.sort((a, b) =>
+          String(a.name || '').localeCompare(String(b.name || ''), undefined, { sensitivity: 'base' })
+        );
+        setRecords(sorted);
       })
       .finally(() => setLoading(false));
   }, [date, staff]);

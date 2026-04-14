@@ -61,6 +61,14 @@ export default function Salary() {
 
   const totalPaid = salaries.filter(s => s.status === 'paid').reduce((sum, s) => sum + parseFloat(s.total_amount || 0), 0);
   const totalPending = salaries.filter(s => s.status === 'pending').reduce((sum, s) => sum + parseFloat(s.total_amount || 0), 0);
+  const sortedSalaries = [...salaries].sort((a, b) =>
+    String(a?.staff_name || '').localeCompare(String(b?.staff_name || ''), undefined, { sensitivity: 'base' })
+  );
+  const sortedStaff = [...staff].sort((a, b) => {
+    const nameA = `${a?.first_name || ''} ${a?.last_name || ''}`.trim() || a?.username || '';
+    const nameB = `${b?.first_name || ''} ${b?.last_name || ''}`.trim() || b?.username || '';
+    return String(nameA).localeCompare(String(nameB), undefined, { sensitivity: 'base' });
+  });
 
   const years = Array.from({ length: 5 }, (_, i) => now.getFullYear() - i);
 
@@ -106,7 +114,7 @@ export default function Salary() {
                   <tr><th>Staff Member</th><th>Base</th><th>Bonus</th><th>Deductions</th><th>Total</th><th>Currency</th><th>Payment Date</th><th>Status</th><th>Actions</th></tr>
                 </thead>
                 <tbody>
-                  {salaries.map(s => (
+                  {sortedSalaries.map(s => (
                     <tr key={s.id}>
                       <td style={{ fontWeight: 600 }}>{s.staff_name}</td>
                       <td>{s.base_amount}</td>
@@ -142,7 +150,7 @@ export default function Salary() {
               if (user?.profile?.salary_base) set('base_amount', user.profile.salary_base);
             }}>
               <option value="">— Select Staff —</option>
-              {staff.map(u => <option key={u.id} value={u.id}>{u.first_name} {u.last_name} || @{u.username}</option>)}
+              {sortedStaff.map(u => <option key={u.id} value={u.id}>{u.first_name} {u.last_name} || @{u.username}</option>)}
             </select>
             {errors.staff && <div className="form-error">{errors.staff}</div>}
           </div>

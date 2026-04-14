@@ -39,6 +39,8 @@ export default function Dashboard() {
   const finance = kpi?.finance || {};
   const clients = kpi?.clients || {};
   const invoices = kpi?.invoices || {};
+  const birthdays = kpi?.birthdays || {};
+  const birthdayReminders = birthdays?.reminders || [];
 
   const fmt = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(v || 0);
 
@@ -184,6 +186,52 @@ export default function Dashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
+      </div>
+
+      {/* Birthday Reminders */}
+      <div className="card" style={{ marginBottom: 24 }}>
+        <div className="card-title" style={{ marginBottom: 12 }}>
+          Birthday Reminders (next 3 days)
+        </div>
+
+        {birthdayReminders.length === 0 ? (
+          <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>No upcoming birthdays in the next 3 days.</p>
+        ) : (
+          <div style={{ display: 'grid', gap: 10 }}>
+            {birthdayReminders.map((item) => {
+              let whenLabel = 'Today';
+              if (item.days_until === 1) whenLabel = 'Tomorrow';
+              if (item.days_until > 1) whenLabel = `In ${item.days_until} days`;
+
+              return (
+                <div
+                  key={item.id}
+                  style={{
+                    border: '1px solid var(--border)',
+                    borderRadius: 10,
+                    padding: '10px 12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 10,
+                    background: '#fff',
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontWeight: 700, fontSize: 13 }}>{item.full_name}</div>
+                    <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>
+                      {item.birthday} {item.phone ? `• ${item.phone}` : ''}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span className="badge-pill badge-pending" style={{ whiteSpace: 'nowrap' }}>{whenLabel}</span>
+                    <Link to={`/clients/${item.id}`} className="btn btn-outline btn-sm">Open</Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Quick Links */}

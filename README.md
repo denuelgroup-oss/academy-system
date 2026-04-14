@@ -14,7 +14,6 @@ A full-stack ERP-style management system for football academies built with **Dja
 | Frontend | React 18 + React Router v6 |
 | Charts | Recharts |
 | Icons | react-icons |
-| Containerization | Docker + Docker Compose |
 
 ---
 
@@ -26,38 +25,6 @@ A full-stack ERP-style management system for football academies built with **Dja
 - **Expenses**: Operational expense tracking with multi-currency
 - **Reports**: Financial, Client, and Attendance analytics
 - **Settings**: System config, Currencies, Exchange Rates
-
----
-
-## Quick Start (Docker)
-
-```bash
-# 1. Clone / copy project to your machine
-cd "Academy App"
-
-# 2. Create backend environment file
-cp backend/.env.example backend/.env
-# Edit backend/.env and fill in SECRET_KEY, and any other values
-
-# 3. Start all services
-docker-compose up --build
-
-# 4. Create a superuser (first time only)
-docker-compose exec backend python manage.py createsuperuser
-
-# 5. Open the app
-#    Frontend:  http://localhost
-#    API:       http://localhost:8000/api/
-#    Admin:     http://localhost:8000/admin/
-```
-
----
-
-## Hostinger Deployment
-
-For production deployment on Hostinger VPS (frontend + backend + MySQL), follow:
-
-- `DEPLOY_HOSTINGER.md`
 
 ---
 
@@ -192,7 +159,6 @@ Academy App/
 │   ├── package.json
 │   ├── Dockerfile
 │   └── nginx.conf
-└── docker-compose.yml
 ```
 
 ---

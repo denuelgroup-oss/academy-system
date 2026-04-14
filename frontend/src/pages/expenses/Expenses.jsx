@@ -12,6 +12,7 @@ export default function Expenses() {
   const [search, setSearch] = useState('');
   const [catFilter, setCatFilter] = useState('');
   const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [totalPages, setTotalPages] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -22,17 +23,17 @@ export default function Expenses() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const params = { page };
+    const params = { page, page_size: pageSize };
     if (search) params.search = search;
     if (catFilter) params.category = catFilter;
     try {
       const r = await api.get('/expenses/', { params });
       const data = r.data.results || r.data;
       setExpenses(data);
-      setTotalPages(Math.ceil((r.data.count || data.length) / 25));
+      setTotalPages(Math.ceil((r.data.count || data.length) / pageSize));
       setTotalAmount(data.reduce((sum, e) => sum + parseFloat(e.amount_base || e.amount || 0), 0));
     } finally { setLoading(false); }
-  }, [page, search, catFilter]);
+  }, [page, pageSize, search, catFilter]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -69,6 +70,9 @@ export default function Expenses() {
     equipment: '#2563eb', maintenance: '#ea580c', utilities: '#7c3aed', salaries: '#16a34a',
     rent: '#d97706', medical: '#dc2626', travel: '#0891b2', marketing: '#db2777', training: '#65a30d', other: '#6b7280'
   }[cat] || '#6b7280');
+  const sortedExpenses = [...expenses].sort((a, b) =>
+    String(a?.title || '').localeCompare(String(b?.title || ''), undefined, { sensitivity: 'base' })
+  );
 
   return (
     <div>
@@ -107,7 +111,7 @@ export default function Expenses() {
                 <tbody>
                   {expenses.length === 0 ? (
                     <tr><td colSpan={9}><div className="empty-state"><div className="icon"><FaReceipt /></div><h3>No expenses</h3></div></td></tr>
-                  ) : expenses.map(e => (
+                  ) : sortedExpenses.map(e => (
                     <tr key={e.id}>
                       <td>{e.expense_date}</td>
                       <td style={{ fontWeight: 600 }}>{e.title}</td>

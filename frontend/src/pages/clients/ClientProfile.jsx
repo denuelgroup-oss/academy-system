@@ -4,10 +4,12 @@ import {
   FaArrowLeft, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt,
   FaCalendarAlt, FaUserShield, FaIdCard, FaCheckCircle,
   FaClock, FaStar, FaMoneyBillWave, FaExclamationTriangle,
-  FaFileInvoiceDollar, FaChevronDown, FaChevronRight, FaEdit,
+  FaChevronDown, FaChevronRight,
 } from 'react-icons/fa';
 import api from '../../api/axios';
 import StatusBadge from '../../components/common/StatusBadge';
+
+const ONE_TIME_RECHARGE_COOLDOWN_DAYS = 180;
 
 const getInitials = (name = '') =>
   name.split(' ').slice(0, 2).map(n => n[0]?.toUpperCase() || '').join('');
@@ -25,7 +27,9 @@ export default function ClientProfile() {
   const [client, setClient] = useState(null);
   const [overview, setOverview] = useState(null);
   const [oneTimePlans, setOneTimePlans] = useState([]);
+  const [blockedOneTimePlanIds, setBlockedOneTimePlanIds] = useState(new Set());
   const [processingPlanId, setProcessingPlanId] = useState(null);
+  const [processingSubscriptionKey, setProcessingSubscriptionKey] = useState('');
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [activeNav, setActiveNav] = useState('overview');
@@ -37,14 +41,40 @@ export default function ClientProfile() {
     const loadClient = async () => {
       setLoading(true);
       try {
-        const [clientRes, overviewRes, plansRes] = await Promise.all([
+        const [clientRes, overviewRes, plansRes, invoicesRes] = await Promise.all([
           api.get(`/clients/${id}/`),
           api.get(`/clients/${id}/overview/`),
           api.get('/plans/?plan_type=one_time&is_active=true&page_size=1000'),
+          api.get(`/sales/invoices/?client=${id}&page_size=1000&ordering=-created_at`),
         ]);
         setClient(clientRes.data);
         setOverview(overviewRes.data);
         setOneTimePlans(plansRes.data.results || plansRes.data || []);
+
+        const invoices = invoicesRes?.data?.results || invoicesRes?.data || [];
+        const blockedIds = new Set();
+        const cutoffDate = new Date(Date.now() - ONE_TIME_RECHARGE_COOLDOWN_DAYS * 86400000);
+        invoices.forEach((inv) => {
+          const planId = Number(inv?.plan);
+          const status = String(inv?.status || '').trim().toLowerCase();
+          if (!planId) return;
+
+          if (['draft', 'sent', 'partial', 'overdue'].includes(status)) {
+            blockedIds.add(planId);
+            return;
+          }
+
+          if (status === 'paid') {
+            const paidRef = inv?.due_date || inv?.issue_date;
+            if (paidRef) {
+              const paidRefDate = new Date(paidRef);
+              if (!Number.isNaN(paidRefDate.getTime()) && paidRefDate > cutoffDate) {
+                blockedIds.add(planId);
+              }
+            }
+          }
+        });
+        setBlockedOneTimePlanIds(blockedIds);
       } finally {
         setLoading(false);
       }
@@ -75,9 +105,9 @@ export default function ClientProfile() {
   const navItems = [
     { key: 'overview', label: 'Overview', tab: 'overview' },
     { key: 'info', label: 'Info', tab: 'info' },
-    { key: 'plan', label: 'Plan', tab: 'subscription', editable: true },
-    { key: 'pending', label: 'Pending', tab: 'subscription' },
-    { key: 'paid', label: 'Paid', tab: 'subscription' },
+    { key: 'plan', label: 'Plan', tab: 'plan' },
+    { key: 'pending', label: 'Pending', tab: 'pending' },
+    { key: 'paid', label: 'Paid', tab: 'paid' },
     { key: 'attendance', label: 'Attendance', tab: 'attendance' },
     { key: 'performance', label: 'Performance', tab: 'attendance' },
   ];
@@ -99,27 +129,60 @@ export default function ClientProfile() {
     return `${value.toFixed(2)} ${currency}`;
   };
 
+  const normalizeStatus = (value) => String(value || '').trim().toLowerCase();
+  const isPaidStatus = (value) => normalizeStatus(value) === 'paid';
+  const isPendingStatus = (value) => !isPaidStatus(value);
+  const parseFeeAmount = (fees) => {
+    const text = String(fees || '').trim();
+    const m = text.match(/([0-9]+(?:\.[0-9]+)?)/);
+    return m ? parseFloat(m[1] || '0') || 0 : 0;
+  };
+
   const selectedOneTimePlans = oneTimePlans.filter(
     p => (client?.one_time_plans || []).includes(p.id)
   );
-  const oneTimePlansPending = selectedOneTimePlans.reduce((sum, p) => sum + parseFloat(p.price || 0), 0);
-  const invoicePending = parseFloat(overview?.pending || 0);
+  const sortedOneTimePlans = [...selectedOneTimePlans].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' })
+  );
+  const oneTimePlansPending = parseFloat(overview?.one_time_pending || 0);
+  const oneTimePlansPaid = parseFloat(overview?.one_time_paid || 0);
+
+  const currentSubscriptionRow = {
+    fees: (overview?.abonnement_row || {}).fees || '-',
+    status: (overview?.abonnement_row || {}).status || client.status || '-',
+  };
+  const mapPendingCalcRow = (r) => ({ fees: r.fees || '-', status: r.status || '-' });
+  const allSubscriptionRows = [
+    currentSubscriptionRow,
+    ...((overview?.past_rows || []).map(mapPendingCalcRow)),
+    ...((overview?.upcoming_rows || []).map(mapPendingCalcRow)),
+  ];
+  const pendingFromRows = allSubscriptionRows
+    .filter(r => isPendingStatus(r.status))
+    .reduce((sum, r) => sum + parseFeeAmount(r.fees), 0);
+
+  const invoicePending = pendingFromRows > 0 ? pendingFromRows : parseFloat(overview?.pending || 0);
   const totalPendingWithOneTime = invoicePending + oneTimePlansPending;
   const pendingCurrency = client?.plan_detail?.currency || selectedOneTimePlans[0]?.currency || 'USD';
 
   const processOneTimePlanPayment = async (plan) => {
     if (!client || !plan) return;
+    if (blockedOneTimePlanIds.has(plan.id)) {
+      window.alert('This one-time plan is already paid for this period (or has an open invoice). It can be charged again after 6 months.');
+      return;
+    }
     setProcessingPlanId(plan.id);
     try {
+      const openStatuses = new Set(['draft', 'sent', 'partial', 'overdue']);
       const q = new URLSearchParams({
         client: String(client.id),
         plan: String(plan.id),
-        status: 'draft,sent,partial,overdue',
         ordering: '-created_at',
-        page_size: '1',
+        page_size: '100',
       });
       const existingRes = await api.get(`/sales/invoices/?${q.toString()}`);
-      const existing = (existingRes.data.results || existingRes.data || [])[0];
+      const existingList = existingRes.data.results || existingRes.data || [];
+      const existing = existingList.find(inv => openStatuses.has(String(inv?.status || '').toLowerCase()));
 
       let invoice = existing;
       if (!invoice) {
@@ -144,22 +207,122 @@ export default function ClientProfile() {
     }
   };
 
-  const StatCard = ({ label, value, sub, color, icon }) => (
-    <div style={{
-      background: '#fff', border: '1px solid var(--border)', borderRadius: 12,
-      padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16,
-      boxShadow: '0 1px 3px rgba(0,0,0,0.06)', flex: 1, minWidth: 160,
-    }}>
+  const processSubscriptionPayment = async (entry) => {
+    if (!client || !entry) return;
+
+    const { invoiceId: entryInvoiceId, fees, periodStart, periodEnd, planName } = entry;
+
+    const rowKey = `${entry.invoiceNo}-${periodStart}-${periodEnd}`;
+    setProcessingSubscriptionKey(rowKey);
+
+    try {
+      let invoiceId = entryInvoiceId;
+      let amount = 0;
+      let currency = pendingCurrency;
+
+      const feeText = String(fees || '').trim();
+      const feeMatch = feeText.match(/([0-9]+(?:\.[0-9]+)?)\s*([A-Za-z]{3})?/);
+      if (feeMatch) {
+        amount = parseFloat(feeMatch[1] || '0') || 0;
+        currency = feeMatch[2] || currency;
+      }
+
+      if (!invoiceId) {
+        const openStatuses = new Set(['draft', 'sent', 'partial', 'overdue']);
+        const query = new URLSearchParams({
+          client: String(client.id),
+          ordering: '-created_at',
+          page_size: '100',
+        });
+        const existingRes = await api.get(`/sales/invoices/?${query.toString()}`);
+        const existingInvoicesAll = existingRes.data.results || existingRes.data || [];
+        const existingInvoices = existingInvoicesAll.filter(inv => openStatuses.has(String(inv?.status || '').toLowerCase()));
+
+        const matched = existingInvoices.find(inv =>
+          String(inv.issue_date || '') === String(periodStart || '')
+          && String(inv.due_date || '') === String(periodEnd || '')
+        );
+
+        if (matched) {
+          invoiceId = matched.id;
+          amount = parseFloat(matched.amount_due ?? matched.total_amount ?? matched.amount ?? amount);
+          currency = matched.currency || currency;
+        } else {
+          const createPayload = {
+            client: client.id,
+            plan: client.plan_detail?.id || null,
+            amount: amount || parseFloat(client.plan_detail?.price || 0),
+            currency,
+            issue_date: periodStart || new Date().toISOString().slice(0, 10),
+            due_date: periodEnd || new Date().toISOString().slice(0, 10),
+            status: 'sent',
+            notes: `Subscription payment - ${planName || 'Plan'} (${periodStart || '-'} to ${periodEnd || '-'})`,
+          };
+          const createRes = await api.post('/sales/invoices/', createPayload);
+          const created = createRes.data;
+          invoiceId = created.id;
+          amount = parseFloat((created.amount_due ?? created.total_amount ?? created.amount ?? createPayload.amount) || 0);
+          currency = created.currency || currency;
+        }
+      }
+
+      navigate(`/sales/payments?invoice=${invoiceId}&amount=${amount || 0}&currency=${currency || pendingCurrency}`);
+    } finally {
+      setProcessingSubscriptionKey('');
+    }
+  };
+
+  const QuickMetric = ({ icon, label, value, note, tone = 'neutral' }) => {
+    const toneMap = {
+      success: { color: '#10b981', bg: '#ecfdf5' },
+      warn: { color: '#f59e0b', bg: '#fffbeb' },
+      danger: { color: '#ef4444', bg: '#fef2f2' },
+      info: { color: '#3b82f6', bg: '#eff6ff' },
+      neutral: { color: '#6b7280', bg: '#f3f4f6' },
+    };
+    const visual = toneMap[tone] || toneMap.neutral;
+
+    return (
       <div style={{
-        width: 44, height: 44, borderRadius: 10, background: color + '1a',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color, fontSize: 18, flexShrink: 0,
-      }}>{icon}</div>
-      <div>
-        <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>{value}</div>
-        <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{label}</div>
-        {sub && <div style={{ fontSize: 11, color, marginTop: 2, fontWeight: 600 }}>{sub}</div>}
+        border: '1px solid var(--border)',
+        borderRadius: 12,
+        padding: '14px 16px',
+        background: '#fff',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+          <div style={{
+            width: 34,
+            height: 34,
+            borderRadius: 8,
+            background: visual.bg,
+            color: visual.color,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 14,
+            flexShrink: 0,
+          }}>
+            {icon}
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>{label}</div>
+        </div>
+        <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1 }}>{value}</div>
+        {note && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>{note}</div>}
       </div>
+    );
+  };
+
+  const SummaryRow = ({ label, value, valueStyle }) => (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '10px 0',
+      borderBottom: '1px solid var(--border)',
+      gap: 12,
+    }}>
+      <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>{label}</span>
+      <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', textAlign: 'right', ...valueStyle }}>{value || '-'}</span>
     </div>
   );
 
@@ -179,79 +342,83 @@ export default function ClientProfile() {
     </div>
   );
 
-  const GridBox = ({ label, value, valueColor }) => (
-    <div style={{ background: '#f9fafb', borderRadius: 8, padding: '10px 14px' }}>
-      <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
-      <div style={{ fontSize: 14, fontWeight: 600, color: valueColor || 'var(--text-primary)' }}>{value || '-'}</div>
-    </div>
-  );
-
   const renderOverview = () => {
     const row = overview?.abonnement_row || {};
+    const planName = overview?.plan_name || client.plan_detail?.name || '-';
+    const attendancePresent = overview?.attendance?.present ?? 0;
+    const attendanceTotal = overview?.attendance?.total ?? 0;
+    const attendanceText = `${attendancePresent}/${attendanceTotal}`;
+    const metricTone = invoicePending > 0 ? 'danger' : 'success';
+    const attendanceTone = attendanceRate >= 75 ? 'success' : attendanceRate >= 50 ? 'warn' : 'danger';
+
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        {/* Quick stats */}
-        <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-          <StatCard
-            label="Plan"
-            value={overview?.plan_name || client.plan_detail?.name || '-'}
-            icon={<FaIdCard />}
-            color="#8b5cf6"
-          />
-          <StatCard label="Total Paid" value={`${overview?.paid ?? 0}`} icon={<FaMoneyBillWave />} color="#10b981" />
-          <StatCard
-            label="Pending"
-            value={formatMoney(totalPendingWithOneTime, pendingCurrency)}
-            icon={<FaExclamationTriangle />}
-            color={totalPendingWithOneTime > 0 ? '#ef4444' : '#10b981'}
-            sub={`Invoices ${formatMoney(invoicePending, pendingCurrency)} + One-time ${formatMoney(oneTimePlansPending, pendingCurrency)}`}
-          />
-          <StatCard
-            label="Items"
-            value={`${overview?.items_count ?? 0}`}
-            icon={<FaFileInvoiceDollar />}
-            color="#3b82f6"
-            sub="invoices"
-          />
-          <StatCard
-            label="Attendance"
-            value={`${attendanceRate}%`}
-            icon={<FaCheckCircle />}
-            color={attendanceRate >= 75 ? '#10b981' : attendanceRate >= 50 ? '#f59e0b' : '#ef4444'}
-            sub={`${overview?.attendance?.present ?? 0} / ${overview?.attendance?.total ?? 0} sessions`}
-          />
-          <StatCard
-            label="Days Until Expiry"
-            value={daysLeft != null ? `${daysLeft}d` : '-'}
-            icon={<FaClock />}
-            color={expiryColor}
-            sub={client.subscription_end || undefined}
-          />
-          <StatCard
-            label="Performance"
-            value={overview?.performance || '-'}
-            icon={<FaStar />}
-            color={performanceColor}
-          />
-        </div>
-
-        {/* Subscription summary */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div className="card" style={{ marginBottom: 0 }}>
-          <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 16 }}>Subscription Summary</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12 }}>
-            <GridBox label="Plan" value={row.abonnement} />
-            <GridBox label="Class" value={row.classe_vacation} />
-            <GridBox label="Invoice" value={row.invoice_no} />
-            <GridBox label="Due Date" value={row.due_date} />
-            <GridBox label="Attendance" value={row.attendance} />
-            <GridBox label="Fees" value={row.fees} />
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap', marginBottom: 14 }}>
+            <div style={{ fontWeight: 700, fontSize: 18 }}>Overview</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Quick view of plan, billing and progress</div>
           </div>
-          <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Invoice Status:</span>
-            <StatusBadge value={row.status || client.status} />
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
+            <QuickMetric
+              label="Plan"
+              value={planName}
+              note={`${overview?.items_count ?? 0} invoice item(s)`}
+              icon={<FaIdCard />}
+              tone="info"
+            />
+            <QuickMetric
+              label="Subscription Outstanding"
+              value={formatMoney(invoicePending, pendingCurrency)}
+              note={`One-time pending ${formatMoney(oneTimePlansPending, pendingCurrency)}`}
+              icon={<FaExclamationTriangle />}
+              tone={metricTone}
+            />
+            <QuickMetric
+              label="Attendance"
+              value={`${attendanceRate}%`}
+              note={`${attendanceText} sessions`}
+              icon={<FaCheckCircle />}
+              tone={attendanceTone}
+            />
+            <QuickMetric
+              label="Expiry"
+              value={daysLeft != null ? `${daysLeft}d` : '-'}
+              note={client.subscription_end || 'No end date'}
+              icon={<FaClock />}
+              tone={daysLeft != null && daysLeft <= 7 ? 'danger' : daysLeft != null && daysLeft <= 30 ? 'warn' : 'success'}
+            />
           </div>
         </div>
 
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+          <div className="card" style={{ marginBottom: 0 }}>
+            <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 8 }}>Financial Summary</div>
+            <SummaryRow label="Subscription Paid" value={formatMoney(overview?.paid ?? 0, pendingCurrency)} valueStyle={{ color: '#10b981' }} />
+            <SummaryRow label="One-time Paid" value={formatMoney(oneTimePlansPaid, pendingCurrency)} valueStyle={{ color: '#10b981' }} />
+            <SummaryRow label="Pending Invoices" value={formatMoney(invoicePending, pendingCurrency)} valueStyle={{ color: invoicePending > 0 ? '#ef4444' : '#10b981' }} />
+            <SummaryRow label="One-time Pending" value={formatMoney(oneTimePlansPending, pendingCurrency)} valueStyle={{ color: oneTimePlansPending > 0 ? '#ef4444' : '#10b981' }} />
+            <SummaryRow label="Total Outstanding" value={formatMoney(totalPendingWithOneTime, pendingCurrency)} valueStyle={{ color: totalPendingWithOneTime > 0 ? '#ef4444' : '#10b981' }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 12 }}>
+              <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>Invoice Status</span>
+              <StatusBadge value={row.status || client.status} />
+            </div>
+          </div>
+
+          <div className="card" style={{ marginBottom: 0 }}>
+            <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 8 }}>Subscription Snapshot</div>
+            <SummaryRow label="Plan" value={row.abonnement || planName} />
+            <SummaryRow label="Class" value={row.classe_vacation || client.class_detail?.name || '-'} />
+            <SummaryRow label="Invoice" value={row.invoice_no || '-'} />
+            <SummaryRow label="Due Date" value={row.due_date || '-'} />
+            <SummaryRow label="Attendance" value={row.attendance || attendanceText} />
+            <SummaryRow label="Fees" value={row.fees || formatMoney(client.plan_detail?.price || 0, client.plan_detail?.currency || pendingCurrency)} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 12 }}>
+              <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>Performance</span>
+              <span style={{ fontWeight: 700, color: performanceColor }}>{overview?.performance || '-'}</span>
+            </div>
+          </div>
+        </div>
       </div>
     );
   };
@@ -281,11 +448,10 @@ export default function ClientProfile() {
     </div>
   );
 
-  const renderSubscription = () => {
+  const renderSubscription = (viewMode = 'plan') => {
     const row = overview?.abonnement_row || {};
-    const normalizeStatus = (value) => String(value || '').trim().toLowerCase();
-    const isPaidStatus = (value) => normalizeStatus(value) === 'paid';
-    const isPendingStatus = (value) => !isPaidStatus(value);
+    const sortByPlanName = (a, b) =>
+      String(a?.planName || '').localeCompare(String(b?.planName || ''), undefined, { sensitivity: 'base' });
 
     const currentRows = [{
       invoiceId: row.invoice_id || null,
@@ -315,16 +481,16 @@ export default function ClientProfile() {
 
     const pastRows = (overview?.past_rows || []).map(mapRow);
     const upcomingRows = (overview?.upcoming_rows || []).map(mapRow);
-    const statusFilter = activeNav === 'paid' ? 'paid' : activeNav === 'pending' ? 'pending' : 'all';
+    const statusFilter = viewMode === 'paid' ? 'paid' : viewMode === 'pending' ? 'pending' : 'all';
     const applyStatusFilter = (rows) => {
       if (statusFilter === 'paid') return rows.filter(r => isPaidStatus(r.status));
       if (statusFilter === 'pending') return rows.filter(r => isPendingStatus(r.status));
       return rows;
     };
 
-    const filteredCurrentRows = applyStatusFilter(currentRows);
-    const filteredUpcomingRows = applyStatusFilter(upcomingRows);
-    const filteredPastRows = applyStatusFilter(pastRows);
+    const filteredCurrentRows = applyStatusFilter(currentRows).sort(sortByPlanName);
+    const filteredUpcomingRows = applyStatusFilter(upcomingRows).sort(sortByPlanName);
+    const filteredPastRows = applyStatusFilter(pastRows).sort(sortByPlanName);
     const totalPaidAmount = parseFloat(overview?.paid || 0);
 
     const renderSubRow = (entry) => {
@@ -401,11 +567,13 @@ export default function ClientProfile() {
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {entry.invoiceId && activeNav !== 'plan' && (
-              <Link
-                to={`/sales/payments?invoice=${entry.invoiceId}`}
+            {viewMode !== 'plan' && isPendingStatus(entry.status) && (
+              <button
+                type="button"
                 className="btn"
                 title="Process Payment"
+                onClick={() => processSubscriptionPayment(entry)}
+                disabled={processingSubscriptionKey === `${entry.invoiceNo}-${entry.periodStart}-${entry.periodEnd}`}
                 style={{
                   width: 32,
                   height: 32,
@@ -420,10 +588,12 @@ export default function ClientProfile() {
                   color: '#fff',
                   border: 'none',
                   boxShadow: '0 4px 10px rgba(249,115,22,0.24)',
+                  opacity: processingSubscriptionKey === `${entry.invoiceNo}-${entry.periodStart}-${entry.periodEnd}` ? 0.7 : 1,
+                  cursor: processingSubscriptionKey === `${entry.invoiceNo}-${entry.periodStart}-${entry.periodEnd}` ? 'wait' : 'pointer',
                 }}
               >
                 <FaMoneyBillWave style={{ fontSize: 13 }} />
-              </Link>
+              </button>
             )}
           </div>
         </div>
@@ -453,8 +623,11 @@ export default function ClientProfile() {
       </button>
     );
 
+    const tableTitle = viewMode === 'paid' ? 'Paid Table' : viewMode === 'pending' ? 'Pending Table' : 'Plan Table';
+
     return (
       <div className="card" style={{ marginBottom: 0, padding: 0, overflow: 'hidden' }}>
+        <div style={{ padding: '12px 12px 0', fontSize: 13, fontWeight: 700, color: '#374151' }}>{tableTitle}</div>
         {statusFilter === 'paid' ? (
           <div
             style={{
@@ -478,7 +651,7 @@ export default function ClientProfile() {
               </div>
             </div>
             <div style={{ color: '#166534', fontSize: 12, fontWeight: 600 }}>
-              Collected from paid invoices
+              Subscription: {formatMoney(totalPaidAmount, pendingCurrency)} | One-time: {formatMoney(oneTimePlansPaid, pendingCurrency)}
             </div>
           </div>
         ) : (
@@ -500,12 +673,12 @@ export default function ClientProfile() {
               <FaExclamationTriangle style={{ color: '#ea580c' }} />
               <div>
                 <div style={{ fontSize: 12, color: '#9a3412', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em' }}>Total Pending Amount</div>
-                <div style={{ fontSize: 19, fontWeight: 800, color: '#7c2d12' }}>{formatMoney(totalPendingWithOneTime, pendingCurrency)}</div>
+                <div style={{ fontSize: 19, fontWeight: 800, color: '#7c2d12' }}>{formatMoney(invoicePending, pendingCurrency)}</div>
               </div>
             </div>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', color: '#9a3412', fontSize: 12, fontWeight: 600 }}>
-              <span>Invoices: {formatMoney(invoicePending, pendingCurrency)}</span>
-              <span>One-time plans: {formatMoney(oneTimePlansPending, pendingCurrency)}</span>
+              <span>Subscription invoices: {formatMoney(invoicePending, pendingCurrency)}</span>
+              <span>One-time invoices: {formatMoney(oneTimePlansPending, pendingCurrency)}</span>
             </div>
           </div>
         )}
@@ -560,7 +733,9 @@ export default function ClientProfile() {
               One-Time Plans
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {selectedOneTimePlans.map(plan => (
+              {sortedOneTimePlans.map(plan => {
+                const isBlockedOneTimePlan = blockedOneTimePlanIds.has(plan.id);
+                return (
                 <div
                   key={plan.id}
                   style={{
@@ -577,7 +752,20 @@ export default function ClientProfile() {
                   }}
                 >
                   <span>{plan.name} ({formatMoney(plan.price, plan.currency)})</span>
-                  {statusFilter === 'pending' && (
+                  <span
+                    style={{
+                      background: isBlockedOneTimePlan ? '#dcfce7' : '#fff7ed',
+                      color: isBlockedOneTimePlan ? '#166534' : '#9a3412',
+                      border: `1px solid ${isBlockedOneTimePlan ? '#86efac' : '#fed7aa'}`,
+                      borderRadius: 999,
+                      padding: '2px 8px',
+                      fontSize: 10,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {isBlockedOneTimePlan ? 'Paid' : 'Pending'}
+                  </span>
+                  {statusFilter === 'pending' && !isBlockedOneTimePlan && (
                     <button
                       type="button"
                       className="btn"
@@ -599,7 +787,8 @@ export default function ClientProfile() {
                     </button>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
@@ -663,7 +852,9 @@ export default function ClientProfile() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'info':         return renderInfo();
-      case 'subscription': return renderSubscription();
+      case 'plan':         return renderSubscription('plan');
+      case 'pending':      return renderSubscription('pending');
+      case 'paid':         return renderSubscription('paid');
       case 'attendance':   return renderAttendance();
       default:             return renderOverview();
     }
@@ -765,7 +956,6 @@ export default function ClientProfile() {
             >
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                   <span>{item.label}</span>
-                  {item.editable && <FaEdit style={{ fontSize: 11 }} />}
                 </span>
             </button>
           ))}

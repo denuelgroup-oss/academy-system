@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renewals</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="renewals" class="dashboard-page module-page">
+  <div class="dashboard-layout">
+    <aside class="academy-sidebar" aria-label="Sidebar navigation">
+      <div class="academy-brand sidebar-brand">
+        <span class="club-badge">GTPro</span>
+        <div>
+          <h1>GTPro</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plans.html">Plans</a>
+        <a href="classes.html">Classes</a>
+        <a href="class-schedule.html">Class Schedule</a>
+        <a href="students.html">Students</a>
+        <a href="attendance.html">Attendance</a>
+        <a class="active" href="renewals.html">Renewals</a>
+        <div class="sidebar-group">
+          <button type="button" class="sidebar-group-title" aria-expanded="false">
+            <span>Sales</span>
+            <span class="sidebar-caret">+</span>
+          </button>
+          <div class="sidebar-submenu">
+            <a href="payments.html?tab=invoices">Invoices</a>
+            <a href="payments.html?tab=pending">Pending Payment</a>
+            <a href="payments.html?tab=received">Received Payment</a>
+          </div>
+        </div>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <a class="logout-link sidebar-logout" href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="academy-header module-header">
+        <div class="academy-brand">
+          <span class="club-badge">GTPro</span>
+          <div>
+            <h1>Renewals</h1>
+            <p>Due renewals and status checks</p>
+          </div>
+        </div>
+        <div class="renewal-search-wrap">
+          <span class="renewal-search-icon">&#128269;</span>
+          <input type="search" id="renewalSearch" class="renewal-search"
+                 placeholder="Search by name, email and mobile"
+                 oninput="onRenewalSearch()" title="Search students" autocomplete="off">
+          <button type="button" class="renewal-search-clear hidden" id="renewalSearchClear"
+                  onclick="clearRenewalSearch()" title="Clear search">&times;</button>
+        </div>
+      </header>
+
+      <main class="dashboard-shell">
+        <section class="module-card">
+          <div id="msg" class="msg"></div>
+
+          <div class="renewal-tabs">
+            <button id="renewal-tab-pending" class="renewal-tab" type="button"
+                    onclick="filterRenewals('pending')">Pending</button>
+            <button id="renewal-tab-renewed" class="renewal-tab" type="button"
+                onclick="filterRenewals('renewed')">Renewed (2 days)</button>
+          </div>
+
+          <div class="renewal-filters-row">
+            <div class="renewal-filter-group" title="Filter by auto renew mode">
+              <span class="renewal-filter-icon">&#8635;</span>
+              <select id="renewalAutoFilter" class="renewal-filter-select" onchange="onRenewalAutoFilterChange()" title="Auto renew filter">
+                <option value="all">All</option>
+                <option value="auto">Auto</option>
+                <option value="manual">Manual</option>
+              </select>
+            </div>
+            <div class="renewal-filter-sep"></div>
+            <div class="renewal-filter-group" title="Filter by renewal date">
+              <span class="renewal-filter-icon">&#128197;</span>
+              <select id="renewalLifetimeFilter" class="renewal-filter-select" onchange="onRenewalLifetimeFilterChange()" title="Lifetime filter">
+                <option value="lifetime">Lifetime</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="this_month">This month</option>
+                <option value="next_month">Next month</option>
+                <option value="select_date">Select date</option>
+              </select>
+              <input type="date" id="renewalFilterDate" class="renewal-filter-date hidden" onchange="onRenewalCustomDateChange()" title="Select date">
+            </div>
+          </div>
+
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th class="renewal-col-check"><input type="checkbox" id="renewalSelectAll" title="Select all"></th>
+                <th>Name</th>
+                <th>Plan</th>
+                <th>Classes</th>
+                <th>Ends on</th>
+                <th>Renewal from</th>
+                <th>Receivable</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="renewalsTable"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+

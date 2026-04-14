@@ -91,7 +91,11 @@ export default function ClientRenewals() {
       .then(r => {
         const list = r.data.results || r.data;
         // Renewals must use subscription plans only.
-        setPlans((list || []).filter(p => p.plan_type !== 'one_time'));
+        setPlans(
+          (list || [])
+            .filter(p => p.plan_type !== 'one_time')
+            .sort((a, b) => String(a?.name || '').localeCompare(String(b?.name || ''), undefined, { sensitivity: 'base' }))
+        );
       })
       .catch(() => {
         setPlans([]);
@@ -198,8 +202,13 @@ export default function ClientRenewals() {
     }
   };
 
-  const renderTable = (data, isExpiredTab = false) => (
-    data.length === 0 ? (
+  const renderTable = (data, isExpiredTab = false) => {
+    const sortedData = [...data].sort((a, b) =>
+      String(a?.full_name || '').localeCompare(String(b?.full_name || ''), undefined, { sensitivity: 'base' })
+    );
+
+    return (
+    sortedData.length === 0 ? (
       <div className="empty-state">
         <div className="icon"><FaSyncAlt /></div>
         <h3>No clients found</h3>
@@ -213,11 +222,11 @@ export default function ClientRenewals() {
                 <th style={{ width: 36 }}>
                   <input
                     type="checkbox"
-                    checked={data.length > 0 && data.every(c => selectedExpired[c.id])}
+                    checked={sortedData.length > 0 && sortedData.every(c => selectedExpired[c.id])}
                     onChange={(e) => {
-                      const checked = e.target.checked;
+                      const { checked } = e.target;
                       const next = { ...selectedExpired };
-                      data.forEach(c => { next[c.id] = checked; });
+                      sortedData.forEach(c => { next[c.id] = checked; });
                       setSelectedExpired(next);
                     }}
                   />
@@ -232,7 +241,7 @@ export default function ClientRenewals() {
             </tr>
           </thead>
           <tbody>
-            {data.map(c => {
+            {sortedData.map(c => {
               const daysLeft = c.days_until_expiry;
               let urgencyColor = '#16a34a';
               if (daysLeft <= 0) urgencyColor = '#dc2626';
@@ -283,6 +292,7 @@ export default function ClientRenewals() {
       </div>
     )
   );
+  };
 
   return (
     <div>

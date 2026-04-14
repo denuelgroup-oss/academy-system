@@ -10,6 +10,25 @@ from rest_framework.permissions import IsAuthenticated
 class DashboardKPIView(APIView):
     """Main dashboard KPIs."""
 
+    @staticmethod
+    def _next_birthday_and_days(dob, today):
+        if not dob:
+            return None, None
+
+        try:
+            next_birthday = dob.replace(year=today.year)
+        except ValueError:
+            # Handle Feb 29 on non-leap years.
+            next_birthday = date(today.year, 2, 28)
+
+        if next_birthday < today:
+            try:
+                next_birthday = dob.replace(year=today.year + 1)
+            except ValueError:
+                next_birthday = date(today.year + 1, 2, 28)
+
+        return next_birthday, (next_birthday - today).days
+
     def get(self, request):
         from apps.clients.models import Client
         from apps.sales.models import Invoice, Payment
@@ -28,6 +47,26 @@ class DashboardKPIView(APIView):
             subscription_end__gte=today,
             status='active',
         ).count()
+
+        # Birthday reminders: clients whose next birthday is within 0..3 days.
+        birthday_reminders = []
+        clients_with_dob = Client.objects.filter(date_of_birth__isnull=False).only(
+            'id', 'first_name', 'last_name', 'date_of_birth', 'phone'
+        )
+        for c in clients_with_dob:
+            next_birthday, days_until = self._next_birthday_and_days(c.date_of_birth, today)
+            if next_birthday is None or days_until is None:
+                continue
+            if 0 <= days_until <= 3:
+                birthday_reminders.append({
+                    'id': c.id,
+                    'full_name': f"{c.first_name} {c.last_name}".strip(),
+                    'phone': c.phone,
+                    'birthday': str(next_birthday),
+                    'days_until': days_until,
+                })
+
+        birthday_reminders.sort(key=lambda x: (x['days_until'], x['full_name'].lower()))
 
         # Revenue
         revenue_this_month = Payment.objects.filter(
@@ -76,6 +115,10 @@ class DashboardKPIView(APIView):
             },
             'attendance': {
                 'today': attendance_today,
+            },
+            'birthdays': {
+                'count': len(birthday_reminders),
+                'reminders': birthday_reminders,
             },
         })
 

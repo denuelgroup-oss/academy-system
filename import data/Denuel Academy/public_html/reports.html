@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="reports" class="dashboard-page module-page">
+  <div class="dashboard-layout">
+    <aside class="academy-sidebar" aria-label="Sidebar navigation">
+      <div class="academy-brand sidebar-brand">
+        <span class="club-badge">GTPro</span>
+        <div>
+          <h1>GTPro</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plans.html">Plans</a>
+        <a href="classes.html">Classes</a>
+        <a href="class-schedule.html">Class Schedule</a>
+        <a href="students.html">Students</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="renewals.html">Renewals</a>
+        <div class="sidebar-group">
+          <button type="button" class="sidebar-group-title" aria-expanded="false">
+            <span>Sales</span>
+            <span class="sidebar-caret">+</span>
+          </button>
+          <div class="sidebar-submenu">
+            <a href="payments.html?tab=invoices">Invoices</a>
+            <a href="payments.html?tab=pending">Pending Payment</a>
+            <a href="payments.html?tab=received">Received Payment</a>
+          </div>
+        </div>
+        <a href="expenses.html">Expenses</a>
+        <a class="active" href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <a class="logout-link sidebar-logout" href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="academy-header module-header">
+        <div class="academy-brand">
+          <span class="club-badge">GTPro</span>
+          <div>
+            <h1>Reports</h1>
+            <p>Generate business and academic reports</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-shell">
+        <section class="module-card">
+          <div id="msg" class="msg"></div>
+
+          <!-- ===== Report Menu Grid ===== -->
+          <div class="rpt-menu-grid">
+
+            <!-- Students -->
+            <div class="rpt-section">
+              <div class="rpt-section-head">
+                <span class="rpt-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </span>
+                <h3 class="rpt-section-title">Students</h3>
+              </div>
+              <ul class="rpt-link-list">
+                <li><a href="payments.html?tab=pending" class="rpt-link">Student pending payment report</a></li>
+                <li><a href="students.html" class="rpt-link">Level-wise report</a></li>
+              </ul>
+            </div>
+
+            <!-- Attendance -->
+            <div class="rpt-section">
+              <div class="rpt-section-head">
+                <span class="rpt-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+                <h3 class="rpt-section-title">Attendance</h3>
+              </div>
+              <ul class="rpt-link-list">
+                <li><a href="attendance.html" class="rpt-link">Student attendance report</a></li>
+                <li><a href="attendance.html" class="rpt-link">Class-wise student attendance</a></li>
+                <li><a href="attendance.html" class="rpt-link">Staff attendance</a></li>
+              </ul>
+            </div>
+
+            <!-- Classes -->
+            <div class="rpt-section">
+              <div class="rpt-section-head">
+                <span class="rpt-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/>
+                  </svg>
+                </span>
+                <h3 class="rpt-section-title">Classes</h3>
+              </div>
+              <ul class="rpt-link-list">
+                <li><a href="classes.html" class="rpt-link">Class-wise student enrollment report</a></li>
+              </ul>
+            </div>
+
+            <!-- Renewals -->
+            <div class="rpt-section">
+              <div class="rpt-section-head">
+                <span class="rpt-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+                <h3 class="rpt-section-title">Renewals</h3>
+              </div>
+              <ul class="rpt-link-list">
+                <li><a href="renewals.html" class="rpt-link">Renewal conversion report</a></li>
+              </ul>
+            </div>
+
+            <!-- Income -->
+            <div class="rpt-section">
+              <div class="rpt-section-head">
+                <span class="rpt-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                    <line x1="1" y1="10" x2="23" y2="10"/>
+                  </svg>
+                </span>
+                <h3 class="rpt-section-title">Income</h3>
+              </div>
+              <ul class="rpt-link-list">
+                <li><a href="payments.html?tab=received" class="rpt-link">Cash in bank and in hand</a></li>
+                <li><a href="revenue-report.html" class="rpt-link">Revenue Report</a></li>
+                <li><a href="payments.html?tab=invoices" class="rpt-link">Items transaction report</a></li>
+                <li><a href="renewals.html" class="rpt-link">MRR report <sup class="rpt-info-icon" title="Monthly Recurring Revenue">&#9432;</sup></a></li>
+              </ul>
+            </div>
+
+            <!-- Expenses -->
+            <div class="rpt-section">
+              <div class="rpt-section-head">
+                <span class="rpt-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </span>
+                <h3 class="rpt-section-title">Expenses</h3>
+              </div>
+              <ul class="rpt-link-list">
+                <li><a href="expense-report.html" class="rpt-link">Expense by month report</a></li>
+                <li><a href="expense-report.html" class="rpt-link">Expense by category report</a></li>
+              </ul>
+            </div>
+
+          </div><!-- /rpt-menu-grid -->
+
+
+
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
+

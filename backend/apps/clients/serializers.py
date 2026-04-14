@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
+from datetime import timedelta
 from .models import Client
 from apps.plans.serializers import PlanSerializer
 from apps.classes.serializers import AcademyClassListSerializer
@@ -7,6 +8,8 @@ from apps.sales.models import Invoice
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    ONE_TIME_RECHARGE_COOLDOWN_DAYS = 180
+
     plan_detail = PlanSerializer(source='plan', read_only=True)
     class_detail = AcademyClassListSerializer(source='academy_class', read_only=True)
     full_name = serializers.CharField(read_only=True)
@@ -66,18 +69,58 @@ class ClientSerializer(serializers.ModelSerializer):
             status='sent',
         )
 
+    def _create_one_time_invoice(self, client, plan):
+        """Create a dedicated invoice for a one-time plan assignment when eligible."""
+        if not plan or plan.plan_type != 'one_time':
+            return
+
+        existing = Invoice.objects.exclude(status='cancelled').filter(client=client, plan=plan)
+        if existing.filter(status__in=['draft', 'sent', 'partial', 'overdue']).exists():
+            return
+
+        last_paid = existing.filter(status='paid').order_by('-due_date', '-issue_date', '-id').first()
+        if last_paid:
+            paid_ref_date = last_paid.due_date or last_paid.issue_date
+            if paid_ref_date:
+                cutoff = timezone.now().date() - timedelta(days=self.ONE_TIME_RECHARGE_COOLDOWN_DAYS)
+                if paid_ref_date > cutoff:
+                    return
+
+        issue_date = timezone.now().date()
+        due_date = issue_date + timedelta(days=7)
+        Invoice.objects.create(
+            client=client,
+            plan=plan,
+            amount=plan.price,
+            currency=plan.currency,
+            issue_date=issue_date,
+            due_date=due_date,
+            status='sent',
+            notes=f'One-time plan invoice - {plan.name}',
+        )
+
     def create(self, validated_data):
         client = super().create(validated_data)
         if client.plan:
             self._create_subscription_invoice(client)
+        for plan in client.one_time_plans.all():
+            self._create_one_time_invoice(client, plan)
         return client
 
     def update(self, instance, validated_data):
         old_plan_id = instance.plan_id
         old_start = instance.subscription_start
         old_end = instance.subscription_end
+        old_one_time_ids = set(instance.one_time_plans.values_list('id', flat=True))
 
         client = super().update(instance, validated_data)
+
+        new_one_time_plans = list(client.one_time_plans.all())
+        new_one_time_ids = {p.id for p in new_one_time_plans}
+        added_one_time_ids = new_one_time_ids - old_one_time_ids
+        for plan in new_one_time_plans:
+            if plan.id in added_one_time_ids:
+                self._create_one_time_invoice(client, plan)
 
         if not client.plan:
             return client
@@ -88,8 +131,11 @@ class ClientSerializer(serializers.ModelSerializer):
             or old_end != client.subscription_end
         )
 
-        has_invoice = client.invoices.exclude(status='cancelled').exists()
-        if subscription_changed or not has_invoice:
+        has_subscription_invoice = client.invoices.exclude(status='cancelled').filter(
+            plan__isnull=False,
+            plan__plan_type='subscription',
+        ).exists()
+        if subscription_changed or not has_subscription_invoice:
             self._create_subscription_invoice(client)
 
         return client

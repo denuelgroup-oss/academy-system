@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net Income Report</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="dashboard-page" data-page="net-income-report">
+  <div class="container">
+    <div class="topbar">
+      <div>Academy Management System</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="reports.html">Reports</a>
+        <a href="revenue-report.html">Revenue Report</a>
+        <a href="net-income-report.html" class="active">Net Income Report</a>
+      </nav>
+    </div>
+    <main>
+      <section class="module-card">
+        <h2>Net Income Report</h2>
+        <form id="netIncomeForm" onsubmit="event.preventDefault(); loadNetIncomeReport();" style="margin-bottom:18px">
+          <label>
+            From: <input type="date" id="netIncomeFrom" required>
+          </label>
+          <label>
+            To: <input type="date" id="netIncomeTo" required>
+          </label>
+          <button type="submit">Show</button>
+        </form>
+        <div id="netIncomeSummary" class="rpt-profit-summary"></div>
+
+        <hr style="margin:32px 0;">
+        <section class="rpt-profit-cat-card">
+          <div class="rpt-revenue-card-head">
+            <h3>Profit by Categories</h3>
+          </div>
+          <form id="profitCatForm" onsubmit="event.preventDefault(); loadProfitByCategory();">
+            <label>
+              From: <input type="date" id="profitCatFrom" required>
+            </label>
+            <label>
+              To: <input type="date" id="profitCatTo" required>
+            </label>
+            <button type="submit">Show</button>
+          </form>
+          <div id="profitCatSummary" class="rpt-profit-summary"></div>
+          <table class="plans-table" style="margin-top:10px">
+            <thead>
+              <tr><th>Category</th><th>Income</th><th>Expense</th><th>Profit</th></tr>
+            </thead>
+            <tbody id="profitCatTable"></tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set default dates for both forms
+      const now = new Date();
+      const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+      // Net Income
+      const from = document.getElementById('netIncomeFrom');
+      const to = document.getElementById('netIncomeTo');
+      if (from && to) {
+        from.value = firstDay.toISOString().slice(0, 10);
+        to.value = now.toISOString().slice(0, 10);
+        loadNetIncomeReport();
+      }
+      // Profit by Categories
+      const catFrom = document.getElementById('profitCatFrom');
+      const catTo = document.getElementById('profitCatTo');
+      if (catFrom && catTo) {
+        catFrom.value = firstDay.toISOString().slice(0, 10);
+        catTo.value = now.toISOString().slice(0, 10);
+        loadProfitByCategory();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from datetime import date, timedelta
 from calendar import monthrange
 from rest_framework import viewsets, filters
@@ -57,11 +57,94 @@ class ClientViewSet(viewsets.ModelViewSet):
         return start, end
 
     @staticmethod
+    def _previous_period_from_current(current_start, duration, value):
+        value = max(1, int(value or 1))
+        previous_end = current_start - timedelta(days=1)
+
+        if duration == 'month':
+            current_month_start = current_start.replace(day=1)
+            previous_end = current_month_start - timedelta(days=1)
+            month_index = (current_month_start.month - 1) - value
+            year = current_month_start.year + (month_index // 12)
+            month = (month_index % 12) + 1
+            previous_start = date(year, month, 1)
+            return previous_start, previous_end
+
+        if duration == 'day':
+            previous_start = current_start - timedelta(days=value)
+        elif duration == 'week':
+            previous_start = current_start - timedelta(days=value * 7)
+        elif duration == 'year':
+            try:
+                previous_start = current_start.replace(year=current_start.year - value)
+            except ValueError:
+                previous_start = current_start.replace(month=2, day=28, year=current_start.year - value)
+        else:
+            month_index = (current_start.month - 1) - value
+            year = current_start.year + (month_index // 12)
+            month = (month_index % 12) + 1
+            day = min(current_start.day, monthrange(year, month)[1])
+            previous_start = date(year, month, day)
+
+        return previous_start, previous_end
+
+    @classmethod
+    def _build_synthetic_past_rows(cls, client, plan_fee):
+        if not client.subscription_start:
+            return []
+
+        duration = getattr(client.plan, 'duration', 'month') if client.plan else 'month'
+        duration_value = getattr(client.plan, 'duration_value', 1) if client.plan else 1
+        enrollment_date = client.enrollment_date
+        cursor_start = client.subscription_start
+        rows = []
+
+        for _ in range(36):
+            previous_start, previous_end = cls._previous_period_from_current(cursor_start, duration, duration_value)
+            if enrollment_date and previous_end < enrollment_date:
+                break
+
+            rows.append({
+                'invoice_id': None,
+                'abonnement': client.plan.name if client.plan else '-',
+                'classe_vacation': client.academy_class.name if client.academy_class else '-',
+                'invoice_no': '-',
+                'due_date': str(previous_end),
+                'attendance': '-',
+                'fees': plan_fee,
+                'status': 'Unpaid',
+                'period_start': str(previous_start),
+                'period_end': str(previous_end),
+            })
+            cursor_start = previous_start
+
+        return rows
+
+    @staticmethod
+    def _monthly_period_from_end(end_date, months=1):
+        """Return calendar-month period [start, end] ending at end_date month."""
+        if not end_date:
+            return None, None
+
+        months = max(1, int(months or 1))
+        end_month_start = date(end_date.year, end_date.month, 1)
+
+        start_month_index = (end_month_start.month - 1) - (months - 1)
+        start_year = end_month_start.year + (start_month_index // 12)
+        start_month = (start_month_index % 12) + 1
+        start = date(start_year, start_month, 1)
+
+        end_day = monthrange(end_date.year, end_date.month)[1]
+        end = date(end_date.year, end_date.month, end_day)
+        return start, end
+
+    @staticmethod
     def _create_auto_renew_invoice(client, plan, today):
+        # De-duplicate by subscription period (due_date) so retries on different days
+        # do not create multiple upcoming invoices for the same cycle.
         duplicate_exists = Invoice.objects.exclude(status='cancelled').filter(
             client=client,
             plan=plan,
-            issue_date=today,
             due_date=client.subscription_end,
             amount=plan.price,
             currency=plan.currency,
@@ -113,7 +196,7 @@ class ClientViewSet(viewsets.ModelViewSet):
         today = timezone.now().date()
 
         auto_candidates = Client.objects.select_related('plan').filter(
-            auto_renew=True,
+            Q(auto_renew=True) | Q(plan__auto_renew_clients=True),
             plan__isnull=False,
             plan__plan_type='subscription',
             subscription_end__lte=today,
@@ -153,8 +236,24 @@ class ClientViewSet(viewsets.ModelViewSet):
         today = timezone.now().date()
 
         invoices = list(client.invoices.exclude(status='cancelled').select_related('plan').order_by('-issue_date', '-id'))
-        pending_total = sum(float(inv.amount_due) for inv in invoices if inv.status != 'paid')
-        paid_total = Payment.objects.filter(invoice__client=client).aggregate(total=Sum('amount')).get('total') or 0
+
+        def is_subscription_invoice(inv):
+            # Keep legacy invoices without an explicit plan in subscription flow.
+            if not inv.plan:
+                return True
+            return inv.plan.plan_type != 'one_time'
+
+        subscription_invoices = [inv for inv in invoices if is_subscription_invoice(inv)]
+        one_time_invoices = [inv for inv in invoices if inv.plan and inv.plan.plan_type == 'one_time']
+
+        pending_total = sum(float(inv.amount_due) for inv in subscription_invoices if inv.status != 'paid')
+        one_time_pending_total = sum(float(inv.amount_due) for inv in one_time_invoices if inv.status != 'paid')
+
+        subscription_ids = [inv.id for inv in subscription_invoices]
+        one_time_ids = [inv.id for inv in one_time_invoices]
+
+        paid_total = Payment.objects.filter(invoice_id__in=subscription_ids).aggregate(total=Sum('amount')).get('total') or 0
+        one_time_paid_total = Payment.objects.filter(invoice_id__in=one_time_ids).aggregate(total=Sum('amount')).get('total') or 0
 
         attendance_qs = ClientAttendance.objects.filter(client=client)
         total_sessions = attendance_qs.count()
@@ -177,29 +276,72 @@ class ClientViewSet(viewsets.ModelViewSet):
             'status': client.status,
         }
 
-        latest_invoice = invoices[0] if invoices else None
-        payment_status = 'Paid' if latest_invoice and latest_invoice.status == 'paid' else 'Unpaid'
+        current_period_start = client.subscription_start
+        current_period_end = client.subscription_end
+        if client.plan and client.plan.duration == 'month' and client.subscription_end:
+            current_period_start, current_period_end = self._monthly_period_from_end(
+                client.subscription_end,
+                client.plan.duration_value,
+            )
+
+        def normalized_invoice_period(inv):
+            period_start = inv.issue_date
+            period_end = inv.due_date
+            monthly_plan = inv.plan or client.plan
+            if monthly_plan and monthly_plan.duration == 'month' and inv.due_date:
+                period_start, period_end = self._monthly_period_from_end(
+                    inv.due_date,
+                    monthly_plan.duration_value,
+                )
+            return period_start, period_end
+
+        current_candidates = [
+            inv for inv in subscription_invoices
+            if normalized_invoice_period(inv) == (current_period_start, current_period_end)
+            and (
+                client.plan_id is None
+                or inv.plan_id is None
+                or inv.plan_id == client.plan_id
+            )
+        ]
+        status_priority = {'paid': 5, 'partial': 4, 'sent': 3, 'draft': 2, 'overdue': 1, 'cancelled': 0}
+        current_invoice = (
+            sorted(current_candidates, key=lambda x: (status_priority.get(x.status, 0), x.issue_date or date.min, x.id), reverse=True)[0]
+            if current_candidates else None
+        )
+
+        payment_status = 'Paid' if current_invoice and current_invoice.status == 'paid' else 'Unpaid'
         plan_fee = '-'
         if client.plan:
             plan_fee = f"{round(float(client.plan.price), 2)} {client.plan.currency}"
 
         absent_sessions = max(total_sessions - present_sessions, 0)
         abonnement_row = {
-            'invoice_id': latest_invoice.id if latest_invoice else None,
+            'invoice_id': current_invoice.id if current_invoice else None,
             'abonnement': client.plan.name if client.plan else '-',
             'classe_vacation': client.academy_class.name if client.academy_class else '-',
-            'invoice_no': latest_invoice.invoice_number if latest_invoice else '-',
-            'due_date': str(client.subscription_end) if client.subscription_end else (str(latest_invoice.due_date) if latest_invoice else '-'),
+            'invoice_no': current_invoice.invoice_number if current_invoice else '-',
+            'due_date': str(client.subscription_end) if client.subscription_end else (str(current_invoice.due_date) if current_invoice else '-'),
             'attendance': f"{present_sessions}/{absent_sessions}",
             'fees': plan_fee,
             'status': payment_status,
-            'period_start': str(client.subscription_start) if client.subscription_start else '-',
-            'period_end': str(client.subscription_end) if client.subscription_end else '-',
+            'period_start': str(current_period_start) if current_period_start else '-',
+            'period_end': str(current_period_end) if current_period_end else '-',
         }
 
         status_label = {'paid': 'Paid', 'partial': 'Partial', 'overdue': 'Overdue', 'sent': 'Sent', 'draft': 'Draft'}
 
         def invoice_to_row(inv):
+            period_start = inv.issue_date
+            period_end = inv.due_date
+
+            monthly_plan = inv.plan or client.plan
+            if monthly_plan and monthly_plan.duration == 'month' and inv.due_date:
+                period_start, period_end = self._monthly_period_from_end(
+                    inv.due_date,
+                    monthly_plan.duration_value,
+                )
+
             return {
                 'invoice_id': inv.id,
                 'abonnement': (inv.plan.name if inv.plan else None) or (client.plan.name if client.plan else '-'),
@@ -209,19 +351,23 @@ class ClientViewSet(viewsets.ModelViewSet):
                 'attendance': '-',
                 'fees': f"{round(float(inv.total_amount), 2)} {inv.currency}",
                 'status': status_label.get(inv.status, 'Unpaid'),
-                'period_start': str(inv.issue_date) if inv.issue_date else '-',
-                'period_end': str(inv.due_date) if inv.due_date else '-',
+                'period_start': str(period_start) if period_start else '-',
+                'period_end': str(period_end) if period_end else '-',
             }
 
         past_rows = []
         upcoming_rows = []
-        for inv in invoices:
-            if latest_invoice and inv.id == latest_invoice.id:
+        for inv in subscription_invoices:
+            period_start, period_end = normalized_invoice_period(inv)
+            if (period_start, period_end) == (current_period_start, current_period_end):
                 continue
             if inv.due_date and inv.due_date >= today and inv.status not in ('paid', 'overdue', 'cancelled'):
                 upcoming_rows.append(invoice_to_row(inv))
             else:
                 past_rows.append(invoice_to_row(inv))
+
+        if not past_rows:
+            past_rows = self._build_synthetic_past_rows(client, plan_fee)
 
         return Response({
             'abonnement': abonnement,
@@ -230,7 +376,10 @@ class ClientViewSet(viewsets.ModelViewSet):
             'upcoming_rows': upcoming_rows,
             'pending': round(float(pending_total), 2),
             'paid': round(float(paid_total), 2),
-            'items_count': len(invoices),
+            'one_time_pending': round(float(one_time_pending_total), 2),
+            'one_time_paid': round(float(one_time_paid_total), 2),
+            'items_count': len(subscription_invoices),
+            'one_time_items_count': len(one_time_invoices),
             'plan_name': client.plan.name if client.plan else '-',
             'attendance': {
                 'present': present_sessions,
