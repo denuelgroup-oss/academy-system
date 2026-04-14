@@ -18,7 +18,7 @@ The new Academy App has a more comprehensive `Client` model compared to the old 
 | N/A | `enrollment_date` | Set to current date or old `created_at` |
 | N/A | `subscription_start` | Set to current date |
 | N/A | `subscription_end` | Set to 1 year from start date |
-| N/A | `plan` | Linked to default "Imported - Basic" plan |
+| N/A | `plan` | Not assigned (no default plan) |
 | N/A | `auto_renew` | Set to `True` |
 
 ---
@@ -139,7 +139,6 @@ python manage.py import_denuel_academy --from-mysql
 ```
 Starting Denuel Academy import...
 Found 45 students in old database
-Created default plan: Imported - Basic
 Created default class: Imported Students
   ✓ Imported: John Doe (1)
   ✓ Imported: Jane Smith (2)

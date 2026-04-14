@@ -105,8 +105,7 @@ class Command(BaseCommand):
                 self.style.SUCCESS(f'Found {len(students)} students in old database')
             )
 
-            # Get default plan and class
-            default_plan = self.get_or_create_default_plan()
+            # Get default class (no default plan assigned)
             default_class = self.get_or_create_default_class()
 
             imported_count = 0
@@ -115,7 +114,7 @@ class Command(BaseCommand):
             for student in students:
                 try:
                     client = self.import_student_as_client(
-                        student, default_plan, default_class
+                        student, default_class
                     )
                     imported_count += 1
                     self.stdout.write(
@@ -174,7 +173,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING('No student INSERT statements found'))
             return
 
-        default_plan = self.get_or_create_default_plan()
         default_class = self.get_or_create_default_class()
 
         imported_count = 0
@@ -197,7 +195,6 @@ class Command(BaseCommand):
                     first_name=first_name,
                     last_name=last_name,
                     defaults={
-                        'plan': default_plan,
                         'academy_class': default_class,
                         'status': student_data.get('status', 'active'),
                         'enrollment_date': timezone.now().date(),
@@ -217,7 +214,7 @@ class Command(BaseCommand):
 
         self.print_summary(imported_count, 0)
 
-    def import_student_as_client(self, student_data, default_plan, default_class):
+    def import_student_as_client(self, student_data, default_class):
         """Convert old student to new Client."""
         # Parse name
         name_parts = student_data['name'].split()
@@ -261,7 +258,6 @@ class Command(BaseCommand):
         client = Client.objects.create(
             first_name=first_name,
             last_name=last_name,
-            plan=default_plan,
             academy_class=academy_class,
             status=status,
             enrollment_date=timezone.now().date(),
@@ -271,24 +267,6 @@ class Command(BaseCommand):
         )
 
         return client
-
-    def get_or_create_default_plan(self):
-        """Get or create a default plan for imported clients."""
-        plan, created = Plan.objects.get_or_create(
-            title='Imported - Basic',
-            defaults={
-                'description': 'Default plan for imported students from Denuel Academy',
-                'price': 0.00,
-                'duration_days': 365,
-                'plan_type': 'subscription',
-                'is_active': True,
-            }
-        )
-        if created:
-            self.stdout.write(
-                self.style.SUCCESS(f'Created default plan: {plan.title}')
-            )
-        return plan
 
     def get_or_create_default_class(self):
         """Get or create a default class for imported clients."""
